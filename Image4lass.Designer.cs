@@ -1,0 +1,238 @@
+﻿namespace Image4glass
+{
+    partial class Image4lass
+    {
+        /// <summary>
+        ///  Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        ///  Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        ///  Required method for Designer support - do not modify
+        ///  the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            numericUpDownNumber = new NumericUpDown();
+            buttonOpenFolder = new Button();
+            comboBoxFoldreName = new ComboBox();
+            tabControl = new TabControl();
+            tabPageForward = new TabPage();
+            pictureBoxForward = new PictureBox();
+            tabPageRear = new TabPage();
+            tabPageLeft = new TabPage();
+            tabPageRight = new TabPage();
+            numericUpDown1 = new NumericUpDown();
+            labelShift = new Label();
+            pictureBoxRear = new PictureBox();
+            pictureBoxLeft = new PictureBox();
+            pictureBoxRight = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownNumber).BeginInit();
+            tabControl.SuspendLayout();
+            tabPageForward.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxForward).BeginInit();
+            tabPageRear.SuspendLayout();
+            tabPageLeft.SuspendLayout();
+            tabPageRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxRear).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLeft).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxRight).BeginInit();
+            SuspendLayout();
+            // 
+            // numericUpDownNumber
+            // 
+            numericUpDownNumber.Location = new Point(6, 6);
+            numericUpDownNumber.Name = "numericUpDownNumber";
+            numericUpDownNumber.Size = new Size(120, 23);
+            numericUpDownNumber.TabIndex = 0;
+            numericUpDownNumber.TextAlign = HorizontalAlignment.Center;
+            // 
+            // buttonOpenFolder
+            // 
+            buttonOpenFolder.Location = new Point(132, 5);
+            buttonOpenFolder.Name = "buttonOpenFolder";
+            buttonOpenFolder.Size = new Size(86, 23);
+            buttonOpenFolder.TabIndex = 1;
+            buttonOpenFolder.Text = "Open Folder";
+            buttonOpenFolder.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxFoldreName
+            // 
+            comboBoxFoldreName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            comboBoxFoldreName.FormattingEnabled = true;
+            comboBoxFoldreName.Location = new Point(224, 6);
+            comboBoxFoldreName.Name = "comboBoxFoldreName";
+            comboBoxFoldreName.Size = new Size(473, 23);
+            comboBoxFoldreName.TabIndex = 2;
+            // 
+            // tabControl
+            // 
+            tabControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tabControl.Controls.Add(tabPageForward);
+            tabControl.Controls.Add(tabPageRear);
+            tabControl.Controls.Add(tabPageLeft);
+            tabControl.Controls.Add(tabPageRight);
+            tabControl.Location = new Point(6, 35);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new Size(766, 514);
+            tabControl.TabIndex = 3;
+            // 
+            // tabPageForward
+            // 
+            tabPageForward.Controls.Add(pictureBoxForward);
+            tabPageForward.Location = new Point(4, 24);
+            tabPageForward.Name = "tabPageForward";
+            tabPageForward.Padding = new Padding(3);
+            tabPageForward.Size = new Size(758, 486);
+            tabPageForward.TabIndex = 0;
+            tabPageForward.Text = "Forward";
+            tabPageForward.UseVisualStyleBackColor = true;
+            // 
+            // pictureBoxForward
+            // 
+            pictureBoxForward.Dock = DockStyle.Fill;
+            pictureBoxForward.Location = new Point(3, 3);
+            pictureBoxForward.Name = "pictureBoxForward";
+            pictureBoxForward.Size = new Size(752, 480);
+            pictureBoxForward.TabIndex = 0;
+            pictureBoxForward.TabStop = false;
+            // 
+            // tabPageRear
+            // 
+            tabPageRear.Controls.Add(pictureBoxRear);
+            tabPageRear.Location = new Point(4, 24);
+            tabPageRear.Name = "tabPageRear";
+            tabPageRear.Padding = new Padding(3);
+            tabPageRear.Size = new Size(758, 486);
+            tabPageRear.TabIndex = 1;
+            tabPageRear.Text = "Rear";
+            tabPageRear.UseVisualStyleBackColor = true;
+            // 
+            // tabPageLeft
+            // 
+            tabPageLeft.Controls.Add(pictureBoxLeft);
+            tabPageLeft.Location = new Point(4, 24);
+            tabPageLeft.Name = "tabPageLeft";
+            tabPageLeft.Size = new Size(758, 486);
+            tabPageLeft.TabIndex = 2;
+            tabPageLeft.Text = "Left";
+            tabPageLeft.UseVisualStyleBackColor = true;
+            // 
+            // tabPageRight
+            // 
+            tabPageRight.Controls.Add(pictureBoxRight);
+            tabPageRight.Location = new Point(4, 24);
+            tabPageRight.Name = "tabPageRight";
+            tabPageRight.Size = new Size(758, 486);
+            tabPageRight.TabIndex = 3;
+            tabPageRight.Text = "Right";
+            tabPageRight.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown1
+            // 
+            numericUpDown1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            numericUpDown1.Location = new Point(740, 6);
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(38, 23);
+            numericUpDown1.TabIndex = 4;
+            // 
+            // labelShift
+            // 
+            labelShift.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            labelShift.AutoSize = true;
+            labelShift.Location = new Point(703, 9);
+            labelShift.Name = "labelShift";
+            labelShift.Size = new Size(31, 15);
+            labelShift.TabIndex = 5;
+            labelShift.Text = "Shift";
+            // 
+            // pictureBoxRear
+            // 
+            pictureBoxRear.Dock = DockStyle.Fill;
+            pictureBoxRear.Location = new Point(3, 3);
+            pictureBoxRear.Name = "pictureBoxRear";
+            pictureBoxRear.Size = new Size(752, 480);
+            pictureBoxRear.TabIndex = 0;
+            pictureBoxRear.TabStop = false;
+            // 
+            // pictureBoxLeft
+            // 
+            pictureBoxLeft.Dock = DockStyle.Fill;
+            pictureBoxLeft.Location = new Point(0, 0);
+            pictureBoxLeft.Name = "pictureBoxLeft";
+            pictureBoxLeft.Size = new Size(758, 486);
+            pictureBoxLeft.TabIndex = 0;
+            pictureBoxLeft.TabStop = false;
+            // 
+            // pictureBoxRight
+            // 
+            pictureBoxRight.Dock = DockStyle.Fill;
+            pictureBoxRight.Location = new Point(0, 0);
+            pictureBoxRight.Name = "pictureBoxRight";
+            pictureBoxRight.Size = new Size(758, 486);
+            pictureBoxRight.TabIndex = 0;
+            pictureBoxRight.TabStop = false;
+            // 
+            // Image4lass
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(784, 561);
+            Controls.Add(labelShift);
+            Controls.Add(numericUpDown1);
+            Controls.Add(tabControl);
+            Controls.Add(comboBoxFoldreName);
+            Controls.Add(buttonOpenFolder);
+            Controls.Add(numericUpDownNumber);
+            Name = "Image4lass";
+            Text = "Image4lass";
+            ((System.ComponentModel.ISupportInitialize)numericUpDownNumber).EndInit();
+            tabControl.ResumeLayout(false);
+            tabPageForward.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBoxForward).EndInit();
+            tabPageRear.ResumeLayout(false);
+            tabPageLeft.ResumeLayout(false);
+            tabPageRight.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxRear).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLeft).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxRight).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        #endregion
+
+        private NumericUpDown numericUpDownNumber;
+        private Button buttonOpenFolder;
+        private ComboBox comboBoxFoldreName;
+        private TabControl tabControl;
+        private TabPage tabPageForward;
+        private TabPage tabPageRear;
+        private TabPage tabPageLeft;
+        private TabPage tabPageRight;
+        private PictureBox pictureBoxForward;
+        private NumericUpDown numericUpDown1;
+        private Label labelShift;
+        private PictureBox pictureBoxRear;
+        private PictureBox pictureBoxLeft;
+        private PictureBox pictureBoxRight;
+    }
+}
