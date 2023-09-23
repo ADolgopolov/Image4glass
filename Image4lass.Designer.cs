@@ -35,24 +35,28 @@
             tabPageForward = new TabPage();
             pictureBoxForward = new PictureBox();
             tabPageRear = new TabPage();
+            pictureBoxRear = new PictureBox();
             tabPageLeft = new TabPage();
+            pictureBoxLeft = new PictureBox();
             tabPageRight = new TabPage();
+            pictureBoxRight = new PictureBox();
             numericUpDown1 = new NumericUpDown();
             labelShift = new Label();
-            pictureBoxRear = new PictureBox();
-            pictureBoxLeft = new PictureBox();
-            pictureBoxRight = new PictureBox();
+            folderBrowserDialog = new FolderBrowserDialog();
+            statusStrip = new StatusStrip();
+            toolStripStatusLabel = new ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)numericUpDownNumber).BeginInit();
             tabControl.SuspendLayout();
             tabPageForward.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxForward).BeginInit();
             tabPageRear.SuspendLayout();
-            tabPageLeft.SuspendLayout();
-            tabPageRight.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxRear).BeginInit();
+            tabPageLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLeft).BeginInit();
+            tabPageRight.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxRight).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            statusStrip.SuspendLayout();
             SuspendLayout();
             // 
             // numericUpDownNumber
@@ -62,6 +66,7 @@
             numericUpDownNumber.Size = new Size(120, 23);
             numericUpDownNumber.TabIndex = 0;
             numericUpDownNumber.TextAlign = HorizontalAlignment.Center;
+            numericUpDownNumber.ValueChanged += numericUpDownNumber_ValueChanged;
             // 
             // buttonOpenFolder
             // 
@@ -71,6 +76,7 @@
             buttonOpenFolder.TabIndex = 1;
             buttonOpenFolder.Text = "Open Folder";
             buttonOpenFolder.UseVisualStyleBackColor = true;
+            buttonOpenFolder.Click += buttonOpenFolder_Click;
             // 
             // comboBoxFoldreName
             // 
@@ -80,6 +86,7 @@
             comboBoxFoldreName.Name = "comboBoxFoldreName";
             comboBoxFoldreName.Size = new Size(473, 23);
             comboBoxFoldreName.TabIndex = 2;
+            comboBoxFoldreName.TextChanged += comboBoxFoldreName_TextChanged;
             // 
             // tabControl
             // 
@@ -91,7 +98,7 @@
             tabControl.Location = new Point(6, 35);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(766, 514);
+            tabControl.Size = new Size(772, 501);
             tabControl.TabIndex = 3;
             // 
             // tabPageForward
@@ -100,7 +107,7 @@
             tabPageForward.Location = new Point(4, 24);
             tabPageForward.Name = "tabPageForward";
             tabPageForward.Padding = new Padding(3);
-            tabPageForward.Size = new Size(758, 486);
+            tabPageForward.Size = new Size(764, 473);
             tabPageForward.TabIndex = 0;
             tabPageForward.Text = "Forward";
             tabPageForward.UseVisualStyleBackColor = true;
@@ -110,7 +117,8 @@
             pictureBoxForward.Dock = DockStyle.Fill;
             pictureBoxForward.Location = new Point(3, 3);
             pictureBoxForward.Name = "pictureBoxForward";
-            pictureBoxForward.Size = new Size(752, 480);
+            pictureBoxForward.Size = new Size(758, 467);
+            pictureBoxForward.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxForward.TabIndex = 0;
             pictureBoxForward.TabStop = false;
             // 
@@ -125,25 +133,57 @@
             tabPageRear.Text = "Rear";
             tabPageRear.UseVisualStyleBackColor = true;
             // 
+            // pictureBoxRear
+            // 
+            pictureBoxRear.Dock = DockStyle.Fill;
+            pictureBoxRear.Location = new Point(3, 3);
+            pictureBoxRear.Name = "pictureBoxRear";
+            pictureBoxRear.Size = new Size(752, 480);
+            pictureBoxRear.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxRear.TabIndex = 0;
+            pictureBoxRear.TabStop = false;
+            // 
             // tabPageLeft
             // 
             tabPageLeft.Controls.Add(pictureBoxLeft);
             tabPageLeft.Location = new Point(4, 24);
             tabPageLeft.Name = "tabPageLeft";
+            tabPageLeft.Padding = new Padding(3);
             tabPageLeft.Size = new Size(758, 486);
             tabPageLeft.TabIndex = 2;
             tabPageLeft.Text = "Left";
             tabPageLeft.UseVisualStyleBackColor = true;
+            // 
+            // pictureBoxLeft
+            // 
+            pictureBoxLeft.Dock = DockStyle.Fill;
+            pictureBoxLeft.Location = new Point(3, 3);
+            pictureBoxLeft.Name = "pictureBoxLeft";
+            pictureBoxLeft.Size = new Size(752, 480);
+            pictureBoxLeft.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxLeft.TabIndex = 0;
+            pictureBoxLeft.TabStop = false;
             // 
             // tabPageRight
             // 
             tabPageRight.Controls.Add(pictureBoxRight);
             tabPageRight.Location = new Point(4, 24);
             tabPageRight.Name = "tabPageRight";
+            tabPageRight.Padding = new Padding(3);
             tabPageRight.Size = new Size(758, 486);
             tabPageRight.TabIndex = 3;
             tabPageRight.Text = "Right";
             tabPageRight.UseVisualStyleBackColor = true;
+            // 
+            // pictureBoxRight
+            // 
+            pictureBoxRight.Dock = DockStyle.Fill;
+            pictureBoxRight.Location = new Point(3, 3);
+            pictureBoxRight.Name = "pictureBoxRight";
+            pictureBoxRight.Size = new Size(752, 480);
+            pictureBoxRight.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxRight.TabIndex = 0;
+            pictureBoxRight.TabStop = false;
             // 
             // numericUpDown1
             // 
@@ -163,38 +203,27 @@
             labelShift.TabIndex = 5;
             labelShift.Text = "Shift";
             // 
-            // pictureBoxRear
+            // statusStrip
             // 
-            pictureBoxRear.Dock = DockStyle.Fill;
-            pictureBoxRear.Location = new Point(3, 3);
-            pictureBoxRear.Name = "pictureBoxRear";
-            pictureBoxRear.Size = new Size(752, 480);
-            pictureBoxRear.TabIndex = 0;
-            pictureBoxRear.TabStop = false;
+            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel });
+            statusStrip.Location = new Point(0, 539);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new Size(784, 22);
+            statusStrip.TabIndex = 6;
+            statusStrip.Text = "statusStrip1";
             // 
-            // pictureBoxLeft
+            // toolStripStatusLabel
             // 
-            pictureBoxLeft.Dock = DockStyle.Fill;
-            pictureBoxLeft.Location = new Point(0, 0);
-            pictureBoxLeft.Name = "pictureBoxLeft";
-            pictureBoxLeft.Size = new Size(758, 486);
-            pictureBoxLeft.TabIndex = 0;
-            pictureBoxLeft.TabStop = false;
-            // 
-            // pictureBoxRight
-            // 
-            pictureBoxRight.Dock = DockStyle.Fill;
-            pictureBoxRight.Location = new Point(0, 0);
-            pictureBoxRight.Name = "pictureBoxRight";
-            pictureBoxRight.Size = new Size(758, 486);
-            pictureBoxRight.TabIndex = 0;
-            pictureBoxRight.TabStop = false;
+            toolStripStatusLabel.Name = "toolStripStatusLabel";
+            toolStripStatusLabel.Size = new Size(256, 17);
+            toolStripStatusLabel.Text = "Use button \"Open Folder\" to init start directory.";
             // 
             // Image4lass
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(784, 561);
+            Controls.Add(statusStrip);
             Controls.Add(labelShift);
             Controls.Add(numericUpDown1);
             Controls.Add(tabControl);
@@ -208,12 +237,14 @@
             tabPageForward.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxForward).EndInit();
             tabPageRear.ResumeLayout(false);
-            tabPageLeft.ResumeLayout(false);
-            tabPageRight.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxRear).EndInit();
+            tabPageLeft.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLeft).EndInit();
+            tabPageRight.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxRight).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -232,7 +263,10 @@
         private NumericUpDown numericUpDown1;
         private Label labelShift;
         private PictureBox pictureBoxRear;
-        private PictureBox pictureBoxLeft;
         private PictureBox pictureBoxRight;
+        private FolderBrowserDialog folderBrowserDialog;
+        private StatusStrip statusStrip;
+        private ToolStripStatusLabel toolStripStatusLabel;
+        private PictureBox pictureBoxLeft;
     }
 }
