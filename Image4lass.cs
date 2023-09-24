@@ -1,3 +1,4 @@
+using System.Drawing.Imaging;
 using System.IO;
 
 namespace Image4glass
@@ -9,7 +10,6 @@ namespace Image4glass
         {
             InitializeComponent();
             this.folderBrowserDialog.SelectedPath = @"D:\GDrive\My Drive\Sources\Xplore1\Ayr\Ayr1\Photos\Run 1\";
-            this.numericUpDownNumber.Value = 10;
             comboBoxFoldreName.Text = @"D:\GDrive\My Drive\Sources\Xplore1\Ayr\Ayr1\Photos\Run 1";
             folderName = @"D:\GDrive\My Drive\Sources\Xplore1\Ayr\Ayr1\Photos\Run 1";
         }
@@ -23,98 +23,73 @@ namespace Image4glass
                 toolStripStatusLabel.Text = newfolder;
             }
         }
-        private bool LoadImages()
+
+
+        private void LoadImageOnTab(string tabFolderName, PictureBox pictureBox, decimal FileNameIndex)
         {
-            string path;
-
-            path = folderName + @"\Forward";
+            string path = folderName + tabFolderName;
             if (Directory.Exists(path))
             {
-                path += @"\" + this.numericUpDownNumber.Value + ".jpg";
+                path += @"\" + FileNameIndex + ".jpg";
                 if (File.Exists(path))
                 {
-                    this.pictureBoxForward.Load(path);
+                    pictureBox.Load(path);
                 }
                 else
                 {
-                    MessageBox.Show("The file does not exist.", path);
-                    return false;
+                    MessageBox.Show(path, "The file does not exist.");
+                    //return false;
                 }
             }
             else
             {
-                MessageBox.Show("The folder does not exist.", path);
-                return false;
+                MessageBox.Show(path, "The folder does not exist.");
+                //return false;
             }
-
-            path = folderName + @"\Rear";
-            if (Directory.Exists(path))
-            {
-                path += @"\" + this.numericUpDownNumber.Value + ".jpg";
-                if (File.Exists(path))
-                {
-                    this.pictureBoxRear.Load(path);
-                }
-                else
-                {
-                    MessageBox.Show("The file does not exist.", path);
-                    return false;
-                }
-            }
-            else
-            {
-                MessageBox.Show("The folder does not exist.", path);
-                return false;
-            }
-
-            path = folderName + @"\Left";
-            if (Directory.Exists(path))
-            {
-                path += @"\" + this.numericUpDownNumber.Value + ".jpg";
-                if (File.Exists(path))
-                {
-                    this.pictureBoxLeft.Load(path);
-                }
-                else
-                {
-                    MessageBox.Show("The file does not exist.", path);
-                    return false;
-                }
-            }
-            else
-            {
-                MessageBox.Show("The folder does not exist.", path);
-                return false;
-            }
-
-            path = folderName + @"\Right";
-            if (Directory.Exists(path))
-            {
-                path += @"\" + this.numericUpDownNumber.Value + ".jpg";
-                if (File.Exists(path))
-                {
-                    this.pictureBoxRight.Load(path);
-                }
-                else
-                {
-                    MessageBox.Show("The file does not exist.", path);
-                    return false;
-                }
-            }
-            else
-            {
-                MessageBox.Show("The folder does not exist.", path);
-                return false;
-            }
-            return true;
+            //return true;
         }
 
-        private void buttonOpenFolder_Click(object sender, EventArgs e)
+        private async Task LoadImages(int tabControlSelectedIndex)
+        {
+            var image = await Task.Run(() =>
+            {
+                switch (tabControlSelectedIndex)
+                {
+                    case 0:
+                        LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownNumber.Value + this.numericUpDownShiftimageIndex.Value);
+                        LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownNumber.Value);
+                        LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownNumber.Value);
+                        break;
+                    case 1:
+                        LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownNumber.Value + this.numericUpDownShiftimageIndex.Value);
+                        LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownNumber.Value);
+                        LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownNumber.Value);
+                        break;
+                    case 2:
+                        LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownNumber.Value);
+                        LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownNumber.Value);
+                        LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownNumber.Value + this.numericUpDownShiftimageIndex.Value);
+                        LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        break;
+                    case 3:
+                        LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownNumber.Value);
+                        LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownNumber.Value);
+                        LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownNumber.Value + this.numericUpDownShiftimageIndex.Value);
+                        LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        break;
+                }
+                return true;
+            });
+        }
+
+        private async void buttonOpenFolder_Click(object sender, EventArgs e)
         {
             if (this.folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
                 folderNameChange(this.folderBrowserDialog.SelectedPath);
-                this.LoadImages();
+                await this.LoadImages(this.tabControl.SelectedIndex);
             }
         }
 
@@ -131,9 +106,20 @@ namespace Image4glass
             }
         }
 
-        private void numericUpDownNumber_ValueChanged(object sender, EventArgs e)
+        private async void numericUpDownNumber_ValueChanged(object sender, EventArgs e)
         {
-            this.LoadImages();
+            numericUpDownNumber.Enabled = false;
+            this.labelForwardImageIndex.Text = $"{this.numericUpDownNumber.Value - this.numericUpDownShiftimageIndex.Value}";
+            this.labelRearImageIndex.Text = $"{this.numericUpDownNumber.Value + this.numericUpDownShiftimageIndex.Value}";
+            try
+            {
+                await this.LoadImages(this.tabControl.SelectedIndex);
+            }
+            finally
+            {
+                numericUpDownNumber.Enabled = true;
+                numericUpDownNumber.Focus();
+            }
         }
     }
 }
