@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
 
@@ -120,6 +121,55 @@ namespace Image4glass
                 numericUpDownNumber.Enabled = true;
                 numericUpDownNumber.Focus();
             }
+        }
+
+        private void pictureBox_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+
+                string programPath = @"c:\PortableProgFiles\FSViewer77\FSViewer.exe";
+                string parameters = "\"" + ((PictureBox)sender).ImageLocation + "\"";
+
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = programPath,
+                    Arguments = parameters,
+                    UseShellExecute = true,
+                    CreateNoWindow = true
+                };
+                Process.Start(startInfo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error starting the program: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonPast_Click(object sender, EventArgs e)
+        {
+            // Xplore1_Ayr_Ayr1_Run 43_459
+            int value;
+            string clipboardText = Clipboard.GetText();
+            int endIndex = clipboardText.Length;
+            for (int i = clipboardText.Length - 1; i >= 0; i--)
+            {
+                if (!Char.IsDigit(clipboardText[i]))
+                {
+                    endIndex = i+1;
+                    break;
+                }
+            }
+            if (endIndex == 0)
+            {
+                value = int.Parse(clipboardText);
+            }
+
+            else
+            {
+                value = int.Parse(clipboardText.Substring(endIndex));
+            }
+            this.numericUpDownNumber.Value = value;
         }
     }
 }

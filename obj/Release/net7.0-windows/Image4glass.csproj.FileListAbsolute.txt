@@ -1,0 +1,16 @@
+D:\App\Image4glass\bin\Release\net7.0-windows\Image4glass.exe
+D:\App\Image4glass\bin\Release\net7.0-windows\Image4glass.deps.json
+D:\App\Image4glass\bin\Release\net7.0-windows\Image4glass.runtimeconfig.json
+D:\App\Image4glass\bin\Release\net7.0-windows\Image4glass.dll
+D:\App\Image4glass\bin\Release\net7.0-windows\Image4glass.pdb
+D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.Image4lass.resources
+D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.csproj.GenerateResource.cache
+D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.GeneratedMSBuildEditorConfig.editorconfig
+D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.AssemblyInfoInputs.cache
+D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.AssemblyInfo.cs
+D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.csproj.CoreCompileInputs.cache
+D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.dll
+D:\App\Image4glass\obj\Release\net7.0-windows\refint\Image4glass.dll
+D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.pdb
+D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.genruntimeconfig.cache
+D:\App\Image4glass\obj\Release\net7.0-windows\ref\Image4glass.dll

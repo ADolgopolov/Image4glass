@@ -1,0 +1,5 @@
+D:\App\Image4glass\bin\Release\net7.0-windows\publish\Image4glass.exe
+D:\App\Image4glass\bin\Release\net7.0-windows\publish\Image4glass.dll
+D:\App\Image4glass\bin\Release\net7.0-windows\publish\Image4glass.deps.json
+D:\App\Image4glass\bin\Release\net7.0-windows\publish\Image4glass.runtimeconfig.json
+D:\App\Image4glass\bin\Release\net7.0-windows\publish\Image4glass.pdb

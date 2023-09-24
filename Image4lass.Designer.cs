@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Image4lass));
             numericUpDownNumber = new NumericUpDown();
             buttonOpenFolder = new Button();
             comboBoxFoldreName = new ComboBox();
@@ -47,6 +48,7 @@
             folderBrowserDialog = new FolderBrowserDialog();
             statusStrip = new StatusStrip();
             toolStripStatusLabel = new ToolStripStatusLabel();
+            buttonPast = new Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDownNumber).BeginInit();
             tabControl.SuspendLayout();
             tabPageForward.SuspendLayout();
@@ -63,10 +65,10 @@
             // 
             // numericUpDownNumber
             // 
-            numericUpDownNumber.Location = new Point(6, 6);
+            numericUpDownNumber.Location = new Point(76, 6);
             numericUpDownNumber.Maximum = new decimal(new int[] { 20000, 0, 0, 0 });
             numericUpDownNumber.Name = "numericUpDownNumber";
-            numericUpDownNumber.Size = new Size(120, 23);
+            numericUpDownNumber.Size = new Size(81, 23);
             numericUpDownNumber.TabIndex = 0;
             numericUpDownNumber.TextAlign = HorizontalAlignment.Center;
             numericUpDownNumber.Value = new decimal(new int[] { 10, 0, 0, 0 });
@@ -74,7 +76,7 @@
             // 
             // buttonOpenFolder
             // 
-            buttonOpenFolder.Location = new Point(132, 5);
+            buttonOpenFolder.Location = new Point(163, 5);
             buttonOpenFolder.Name = "buttonOpenFolder";
             buttonOpenFolder.Size = new Size(86, 23);
             buttonOpenFolder.TabIndex = 1;
@@ -86,9 +88,9 @@
             // 
             comboBoxFoldreName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             comboBoxFoldreName.FormattingEnabled = true;
-            comboBoxFoldreName.Location = new Point(224, 6);
+            comboBoxFoldreName.Location = new Point(255, 6);
             comboBoxFoldreName.Name = "comboBoxFoldreName";
-            comboBoxFoldreName.Size = new Size(473, 23);
+            comboBoxFoldreName.Size = new Size(442, 23);
             comboBoxFoldreName.TabIndex = 2;
             comboBoxFoldreName.TextChanged += comboBoxFoldreName_TextChanged;
             // 
@@ -135,6 +137,7 @@
             pictureBoxForward.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxForward.TabIndex = 0;
             pictureBoxForward.TabStop = false;
+            pictureBoxForward.DoubleClick += pictureBox_DoubleClick;
             // 
             // tabPageRear
             // 
@@ -166,6 +169,7 @@
             pictureBoxRear.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxRear.TabIndex = 0;
             pictureBoxRear.TabStop = false;
+            pictureBoxRear.DoubleClick += pictureBox_DoubleClick;
             // 
             // tabPageLeft
             // 
@@ -187,6 +191,7 @@
             pictureBoxLeft.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLeft.TabIndex = 0;
             pictureBoxLeft.TabStop = false;
+            pictureBoxLeft.DoubleClick += pictureBox_DoubleClick;
             // 
             // tabPageRight
             // 
@@ -208,6 +213,7 @@
             pictureBoxRight.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxRight.TabIndex = 0;
             pictureBoxRight.TabStop = false;
+            pictureBoxRight.DoubleClick += pictureBox_DoubleClick;
             // 
             // numericUpDownShiftimageIndex
             // 
@@ -216,7 +222,7 @@
             numericUpDownShiftimageIndex.Name = "numericUpDownShiftimageIndex";
             numericUpDownShiftimageIndex.Size = new Size(38, 23);
             numericUpDownShiftimageIndex.TabIndex = 4;
-            numericUpDownShiftimageIndex.Value = new decimal(new int[] { 7, 0, 0, 0 });
+            numericUpDownShiftimageIndex.Value = new decimal(new int[] { 3, 0, 0, 0 });
             numericUpDownShiftimageIndex.ValueChanged += numericUpDownNumber_ValueChanged;
             // 
             // labelShift
@@ -244,11 +250,22 @@
             toolStripStatusLabel.Size = new Size(256, 17);
             toolStripStatusLabel.Text = "Use button \"Open Folder\" to init start directory.";
             // 
+            // buttonPast
+            // 
+            buttonPast.Location = new Point(10, 5);
+            buttonPast.Name = "buttonPast";
+            buttonPast.Size = new Size(60, 23);
+            buttonPast.TabIndex = 7;
+            buttonPast.Text = "Paste";
+            buttonPast.UseVisualStyleBackColor = true;
+            buttonPast.Click += buttonPast_Click;
+            // 
             // Image4lass
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(784, 561);
+            Controls.Add(buttonPast);
             Controls.Add(statusStrip);
             Controls.Add(labelShift);
             Controls.Add(numericUpDownShiftimageIndex);
@@ -256,6 +273,7 @@
             Controls.Add(comboBoxFoldreName);
             Controls.Add(buttonOpenFolder);
             Controls.Add(numericUpDownNumber);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Image4lass";
             Text = "Image4lass";
             ((System.ComponentModel.ISupportInitialize)numericUpDownNumber).EndInit();
@@ -298,5 +316,6 @@
         private PictureBox pictureBoxLeft;
         private Label labelForwardImageIndex;
         private Label labelRearImageIndex;
+        private Button buttonPast;
     }
 }
