@@ -49,6 +49,9 @@
             statusStrip = new StatusStrip();
             toolStripStatusLabel = new ToolStripStatusLabel();
             buttonPast = new Button();
+            labelLoading = new Label();
+            buttonNumberDown = new Button();
+            buttonNumberUp = new Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDownNumber).BeginInit();
             tabControl.SuspendLayout();
             tabPageForward.SuspendLayout();
@@ -76,7 +79,7 @@
             // 
             // buttonOpenFolder
             // 
-            buttonOpenFolder.Location = new Point(163, 5);
+            buttonOpenFolder.Location = new Point(265, 6);
             buttonOpenFolder.Name = "buttonOpenFolder";
             buttonOpenFolder.Size = new Size(86, 23);
             buttonOpenFolder.TabIndex = 1;
@@ -88,9 +91,9 @@
             // 
             comboBoxFoldreName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             comboBoxFoldreName.FormattingEnabled = true;
-            comboBoxFoldreName.Location = new Point(255, 6);
+            comboBoxFoldreName.Location = new Point(357, 6);
             comboBoxFoldreName.Name = "comboBoxFoldreName";
-            comboBoxFoldreName.Size = new Size(442, 23);
+            comboBoxFoldreName.Size = new Size(340, 23);
             comboBoxFoldreName.TabIndex = 2;
             comboBoxFoldreName.TextChanged += comboBoxFoldreName_TextChanged;
             // 
@@ -252,7 +255,7 @@
             // 
             // buttonPast
             // 
-            buttonPast.Location = new Point(10, 5);
+            buttonPast.Location = new Point(10, 6);
             buttonPast.Name = "buttonPast";
             buttonPast.Size = new Size(60, 23);
             buttonPast.TabIndex = 7;
@@ -260,11 +263,45 @@
             buttonPast.UseVisualStyleBackColor = true;
             buttonPast.Click += buttonPast_Click;
             // 
+            // labelLoading
+            // 
+            labelLoading.BorderStyle = BorderStyle.FixedSingle;
+            labelLoading.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            labelLoading.Location = new Point(163, 6);
+            labelLoading.Name = "labelLoading";
+            labelLoading.Size = new Size(96, 23);
+            labelLoading.TabIndex = 8;
+            labelLoading.Text = "Loading...";
+            labelLoading.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // buttonNumberDown
+            // 
+            buttonNumberDown.Location = new Point(163, 6);
+            buttonNumberDown.Name = "buttonNumberDown";
+            buttonNumberDown.Size = new Size(48, 23);
+            buttonNumberDown.TabIndex = 9;
+            buttonNumberDown.Text = "<<";
+            buttonNumberDown.UseVisualStyleBackColor = true;
+            buttonNumberDown.Click += buttonNumberDown_Click;
+            // 
+            // buttonNumberUp
+            // 
+            buttonNumberUp.Location = new Point(211, 6);
+            buttonNumberUp.Name = "buttonNumberUp";
+            buttonNumberUp.Size = new Size(48, 23);
+            buttonNumberUp.TabIndex = 10;
+            buttonNumberUp.Text = ">>";
+            buttonNumberUp.UseVisualStyleBackColor = true;
+            buttonNumberUp.Click += buttonNumberUp_Click;
+            // 
             // Image4lass
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(784, 561);
+            Controls.Add(buttonNumberUp);
+            Controls.Add(buttonNumberDown);
+            Controls.Add(labelLoading);
             Controls.Add(buttonPast);
             Controls.Add(statusStrip);
             Controls.Add(labelShift);
@@ -317,5 +354,8 @@
         private Label labelForwardImageIndex;
         private Label labelRearImageIndex;
         private Button buttonPast;
+        private Label labelLoading;
+        private Button buttonNumberDown;
+        private Button buttonNumberUp;
     }
 }

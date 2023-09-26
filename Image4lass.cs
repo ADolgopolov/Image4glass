@@ -110,6 +110,8 @@ namespace Image4glass
         private async void numericUpDownNumber_ValueChanged(object sender, EventArgs e)
         {
             numericUpDownNumber.Enabled = false;
+            buttonNumberDown.Visible = false;
+            buttonNumberUp.Visible = false;
             this.labelForwardImageIndex.Text = $"{this.numericUpDownNumber.Value - this.numericUpDownShiftimageIndex.Value}";
             this.labelRearImageIndex.Text = $"{this.numericUpDownNumber.Value + this.numericUpDownShiftimageIndex.Value}";
             try
@@ -119,6 +121,8 @@ namespace Image4glass
             finally
             {
                 numericUpDownNumber.Enabled = true;
+                buttonNumberDown.Visible = true;
+                buttonNumberUp.Visible = true;
                 numericUpDownNumber.Focus();
             }
         }
@@ -156,7 +160,7 @@ namespace Image4glass
             {
                 if (!Char.IsDigit(clipboardText[i]))
                 {
-                    endIndex = i+1;
+                    endIndex = i + 1;
                     break;
                 }
             }
@@ -170,6 +174,16 @@ namespace Image4glass
                 value = int.Parse(clipboardText.Substring(endIndex));
             }
             this.numericUpDownNumber.Value = value;
+        }
+
+        private void buttonNumberDown_Click(object sender, EventArgs e)
+        {
+            this.numericUpDownNumber.Value--;
+        }
+
+        private void buttonNumberUp_Click(object sender, EventArgs e)
+        {
+            this.numericUpDownNumber.Value++;
         }
     }
 }
