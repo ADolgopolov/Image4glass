@@ -90,6 +90,7 @@ namespace Image4glass
             if (this.folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
                 folderNameChange(this.folderBrowserDialog.SelectedPath);
+                this.numericUpDownNumber.Value = this.numericUpDownShiftimageIndex.Value + 1;
                 await this.LoadImages(this.tabControl.SelectedIndex);
             }
         }
