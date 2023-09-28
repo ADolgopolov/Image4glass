@@ -14,3 +14,4 @@ D:\App\Image4glass\obj\Debug\net7.0-windows\refint\Image4glass.dll
 D:\App\Image4glass\obj\Debug\net7.0-windows\Image4glass.pdb
 D:\App\Image4glass\obj\Debug\net7.0-windows\Image4glass.genruntimeconfig.cache
 D:\App\Image4glass\obj\Debug\net7.0-windows\ref\Image4glass.dll
+D:\App\Image4glass\obj\Debug\net7.0-windows\Image4glass.Properties.Resources.resources

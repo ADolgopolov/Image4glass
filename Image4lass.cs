@@ -186,5 +186,35 @@ namespace Image4glass
         {
             this.numericUpDownNumber.Value++;
         }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string imageShortName_TAG = String.Empty;
+            switch (this.tabControl.SelectedIndex)
+            {
+                case 0:
+                    imageShortName_TAG = "Forward " + $"{this.numericUpDownNumber.Value - this.numericUpDownShiftimageIndex.Value}";
+
+                    break;
+                case 1:
+                    imageShortName_TAG = "Rear " + $"{this.numericUpDownNumber.Value + this.numericUpDownShiftimageIndex.Value}";
+                    break;
+                case 2:
+                    imageShortName_TAG = "Left " + $"{this.numericUpDownNumber.Value}";
+                    break;
+                case 3:
+                    imageShortName_TAG = "Right " + $"{this.numericUpDownNumber.Value}"; ;
+                    break;
+            }
+
+            this.toolStripStatusLabelImageTAG.Text = imageShortName_TAG;
+            this.toolStripStatusLabelImageTAG.BackColor = SystemColors.Control;
+        }
+
+        private void toolStripStatusLabelImageTAG_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(this.toolStripStatusLabelImageTAG.Text);
+            this.toolStripStatusLabelImageTAG.BackColor = SystemColors.ActiveCaption;
+        }
     }
 }

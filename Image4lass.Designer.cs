@@ -48,6 +48,7 @@
             folderBrowserDialog = new FolderBrowserDialog();
             statusStrip = new StatusStrip();
             toolStripStatusLabel = new ToolStripStatusLabel();
+            toolStripStatusLabelImageTAG = new ToolStripStatusLabel();
             buttonPast = new Button();
             labelLoading = new Label();
             buttonNumberDown = new Button();
@@ -109,6 +110,7 @@
             tabControl.SelectedIndex = 0;
             tabControl.Size = new Size(772, 501);
             tabControl.TabIndex = 3;
+            tabControl.SelectedIndexChanged += tabControl_SelectedIndexChanged;
             // 
             // tabPageForward
             // 
@@ -240,18 +242,26 @@
             // 
             // statusStrip
             // 
-            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel });
-            statusStrip.Location = new Point(0, 539);
+            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel, toolStripStatusLabelImageTAG });
+            statusStrip.Location = new Point(0, 537);
             statusStrip.Name = "statusStrip";
-            statusStrip.Size = new Size(784, 22);
+            statusStrip.Size = new Size(784, 24);
             statusStrip.TabIndex = 6;
             statusStrip.Text = "statusStrip1";
             // 
             // toolStripStatusLabel
             // 
             toolStripStatusLabel.Name = "toolStripStatusLabel";
-            toolStripStatusLabel.Size = new Size(256, 17);
+            toolStripStatusLabel.Size = new Size(256, 19);
             toolStripStatusLabel.Text = "Use button \"Open Folder\" to init start directory.";
+            // 
+            // toolStripStatusLabelImageTAG
+            // 
+            toolStripStatusLabelImageTAG.BorderSides = ToolStripStatusLabelBorderSides.Left | ToolStripStatusLabelBorderSides.Top | ToolStripStatusLabelBorderSides.Right | ToolStripStatusLabelBorderSides.Bottom;
+            toolStripStatusLabelImageTAG.Name = "toolStripStatusLabelImageTAG";
+            toolStripStatusLabelImageTAG.Size = new Size(119, 19);
+            toolStripStatusLabelImageTAG.Text = "And open first fotos.";
+            toolStripStatusLabelImageTAG.Click += toolStripStatusLabelImageTAG_Click;
             // 
             // buttonPast
             // 
@@ -357,5 +367,6 @@
         private Label labelLoading;
         private Button buttonNumberDown;
         private Button buttonNumberUp;
+        private ToolStripStatusLabel toolStripStatusLabelImageTAG;
     }
 }
