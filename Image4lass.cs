@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.IO;
@@ -7,12 +9,24 @@ namespace Image4glass
     public partial class Image4lass : Form
     {
         string folderName;
+        ArrayList folderList = new ArrayList();
         public Image4lass()
         {
             InitializeComponent();
             this.folderBrowserDialog.SelectedPath = @"D:\GDrive\My Drive\Sources\Xplore1\Ayr\Ayr1\Photos\Run 1\";
             comboBoxFoldreName.Text = @"D:\GDrive\My Drive\Sources\Xplore1\Ayr\Ayr1\Photos\Run 1";
             folderName = @"D:\GDrive\My Drive\Sources\Xplore1\Ayr\Ayr1\Photos\Run 1";
+        }
+
+        private void addNewFolderToList(string newFolder)
+        {
+            if (this.folderList.Contains(newFolder))
+            {
+                this.folderList.RemoveAt(folderList.IndexOf(newFolder));
+            }
+            this.folderList.Insert(0, newFolder);
+            this.comboBoxFoldreName.Items.Clear();
+            this.comboBoxFoldreName.Items.AddRange(folderList.ToArray());
         }
 
         private void folderNameChange(string newfolder)
@@ -90,6 +104,7 @@ namespace Image4glass
             if (this.folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
                 folderNameChange(this.folderBrowserDialog.SelectedPath);
+                addNewFolderToList(this.folderBrowserDialog.SelectedPath);
                 this.numericUpDownNumber.Value = this.numericUpDownShiftimageIndex.Value + 1;
                 await this.LoadImages(this.tabControl.SelectedIndex);
             }
