@@ -21,6 +21,8 @@ namespace Image4glass
 
         DefaultImageViewer viewer = new DefaultImageViewer();
 
+        FilePathBuilder filePathBuilder = new FilePathBuilder();
+
         public Image4lass()
         {
             InitializeComponent();
@@ -44,7 +46,6 @@ namespace Image4glass
             {
                 this.folderName = newfolder;
                 comboBoxFoldreName.Text = newfolder;
-                toolStripStatusLabel.Text = newfolder;
             }
         }
 
@@ -200,41 +201,64 @@ namespace Image4glass
             }
             */
             string imagePath = ((PictureBox)sender).ImageLocation;
-            
+
             viewer.OpenImage(imagePath);
         }
-        private void buttonPast_Click(object sender, EventArgs e)
+        private async void buttonPast_ClickAsync(object sender, EventArgs e)
         {
+            //string filePath = builder.FullPath;
             if (Clipboard.ContainsText())
             {
-                int value;
-                string clipboardTextString = Clipboard.GetText();
-                int cutStringToIndex = 0;
-                int digitsAmount = 0;
-                for (int i = clipboardTextString.Length - 1; i >= 0; i--)
+                if (this.filePathBuilder.IsInitializated)
                 {
-                    if (Char.IsDigit(clipboardTextString[i]))
+                    string part2 = Clipboard.GetText();
+                    filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run ", "Photos\\Run ");
+                    int lastSeparatorIndex = part2.LastIndexOf("_") + 1;
+                    filePathBuilder.Part3 = part2.Substring(lastSeparatorIndex, part2.Length - lastSeparatorIndex);
+                    if (File.Exists(filePathBuilder.FullImageFilePath))
                     {
-                        digitsAmount++;
+
+                        folderNameChange(filePathBuilder.RunFolderFullPath);
+                        addNewFolderToList(filePathBuilder.RunFolderFullPath);
+                        this.numericUpDownFotoNumber.Value = int.Parse(filePathBuilder.Part3);
+                        await this.LoadImages(this.tabControl.SelectedIndex);
                     }
                     else
                     {
-                        cutStringToIndex = i + 1;
-                        break;
+                        MessageBox.Show(filePathBuilder.FullImageFilePath + "; - Файл не знайдено. Виберіть теку самостійно.", "Інформація");
                     }
-                }
-
-                if (digitsAmount == 0)
-                {
-                    MessageBox.Show("Буфер обміну не містить рядок з номером.", "Інформація");
                 }
                 else
                 {
-                    string subStr = clipboardTextString.Substring(cutStringToIndex);
-                    if (Regex.IsMatch(subStr, @"^\d+$"))
+                    int value;
+                    string clipboardTextString = Clipboard.GetText();
+                    int cutStringToIndex = 0;
+                    int digitsAmount = 0;
+                    for (int i = clipboardTextString.Length - 1; i >= 0; i--)
                     {
-                        value = int.Parse(subStr);
-                        this.numericUpDownFotoNumber.Value = value;
+                        if (Char.IsDigit(clipboardTextString[i]))
+                        {
+                            digitsAmount++;
+                        }
+                        else
+                        {
+                            cutStringToIndex = i + 1;
+                            break;
+                        }
+                    }
+
+                    if (digitsAmount == 0)
+                    {
+                        MessageBox.Show("Буфер обміну не містить рядок з номером.", "Інформація");
+                    }
+                    else
+                    {
+                        string subStr = clipboardTextString.Substring(cutStringToIndex);
+                        if (Regex.IsMatch(subStr, @"^\d+$"))
+                        {
+                            value = int.Parse(subStr);
+                            this.numericUpDownFotoNumber.Value = value;
+                        }
                     }
                 }
             }
@@ -332,6 +356,22 @@ namespace Image4glass
             if (str is not null)
                 return str.ToString();
             else return "";
+        }
+
+        private void openBasicFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.basicFolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                this.toolStripStatusLabel.Text = this.basicFolderBrowserDialog.SelectedPath;
+                filePathBuilder.Part1 = this.basicFolderBrowserDialog.SelectedPath;
+
+            }
+        }
+
+        private void resetBasicFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.toolStripStatusLabel.Text = "Set basic folder to recognize string in clipboard";
+            filePathBuilder.Reset();
         }
     }
 }

@@ -50,10 +50,14 @@
             folderBrowserDialog = new FolderBrowserDialog();
             statusStrip = new StatusStrip();
             toolStripStatusLabel = new ToolStripStatusLabel();
+            toolStripSplitButton1 = new ToolStripSplitButton();
+            openBasicFolderToolStripMenuItem = new ToolStripMenuItem();
+            resetBasicFolderToolStripMenuItem = new ToolStripMenuItem();
             buttonPast = new Button();
             labelLoading = new Label();
             buttonNumberDown = new Button();
             buttonNumberUp = new Button();
+            basicFolderBrowserDialog = new FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)numericUpDownFotoNumber).BeginInit();
             tabControl.SuspendLayout();
             tabPageForward.SuspendLayout();
@@ -263,7 +267,7 @@
             // 
             // statusStrip
             // 
-            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel });
+            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel, toolStripSplitButton1 });
             statusStrip.Location = new Point(0, 539);
             statusStrip.Name = "statusStrip";
             statusStrip.Size = new Size(1094, 22);
@@ -273,8 +277,32 @@
             // toolStripStatusLabel
             // 
             toolStripStatusLabel.Name = "toolStripStatusLabel";
-            toolStripStatusLabel.Size = new Size(256, 17);
-            toolStripStatusLabel.Text = "Use button \"Open Folder\" to init start directory.";
+            toolStripStatusLabel.Size = new Size(254, 17);
+            toolStripStatusLabel.Text = "Set basic folder to recognize string in clipboard";
+            // 
+            // toolStripSplitButton1
+            // 
+            toolStripSplitButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripSplitButton1.DropDownItems.AddRange(new ToolStripItem[] { openBasicFolderToolStripMenuItem, resetBasicFolderToolStripMenuItem });
+            toolStripSplitButton1.Image = (Image)resources.GetObject("toolStripSplitButton1.Image");
+            toolStripSplitButton1.ImageTransparentColor = Color.Magenta;
+            toolStripSplitButton1.Name = "toolStripSplitButton1";
+            toolStripSplitButton1.Size = new Size(32, 20);
+            toolStripSplitButton1.Text = "toolStripSplitButton1";
+            // 
+            // openBasicFolderToolStripMenuItem
+            // 
+            openBasicFolderToolStripMenuItem.Name = "openBasicFolderToolStripMenuItem";
+            openBasicFolderToolStripMenuItem.Size = new Size(180, 22);
+            openBasicFolderToolStripMenuItem.Text = "Open basic folder";
+            openBasicFolderToolStripMenuItem.Click += openBasicFolderToolStripMenuItem_Click;
+            // 
+            // resetBasicFolderToolStripMenuItem
+            // 
+            resetBasicFolderToolStripMenuItem.Name = "resetBasicFolderToolStripMenuItem";
+            resetBasicFolderToolStripMenuItem.Size = new Size(180, 22);
+            resetBasicFolderToolStripMenuItem.Text = "Reset basic folder";
+            resetBasicFolderToolStripMenuItem.Click += resetBasicFolderToolStripMenuItem_Click;
             // 
             // buttonPast
             // 
@@ -284,7 +312,7 @@
             buttonPast.TabIndex = 7;
             buttonPast.Text = "Paste";
             buttonPast.UseVisualStyleBackColor = true;
-            buttonPast.Click += buttonPast_Click;
+            buttonPast.Click += buttonPast_ClickAsync;
             // 
             // labelLoading
             // 
@@ -386,5 +414,9 @@
         private Button buttonNumberUp;
         private Label labelLeftImageIndex;
         private Label labelRightImageIndex;
+        private ToolStripSplitButton toolStripSplitButton1;
+        private ToolStripMenuItem openBasicFolderToolStripMenuItem;
+        private FolderBrowserDialog basicFolderBrowserDialog;
+        private ToolStripMenuItem resetBasicFolderToolStripMenuItem;
     }
 }
