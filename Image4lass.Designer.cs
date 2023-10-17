@@ -40,15 +40,16 @@
             labelRearImageIndex = new Label();
             pictureBoxRear = new PictureBox();
             tabPageLeft = new TabPage();
+            labelLeftImageIndex = new Label();
             pictureBoxLeft = new PictureBox();
             tabPageRight = new TabPage();
+            labelRightImageIndex = new Label();
             pictureBoxRight = new PictureBox();
             numericUpDownShiftimageIndex = new NumericUpDown();
             labelShift = new Label();
             folderBrowserDialog = new FolderBrowserDialog();
             statusStrip = new StatusStrip();
             toolStripStatusLabel = new ToolStripStatusLabel();
-            toolStripStatusLabelImageTAG = new ToolStripStatusLabel();
             buttonPast = new Button();
             labelLoading = new Label();
             buttonNumberDown = new Button();
@@ -111,7 +112,6 @@
             tabControl.SelectedIndex = 0;
             tabControl.Size = new Size(1082, 501);
             tabControl.TabIndex = 3;
-            tabControl.SelectedIndexChanged += tabControl_SelectedIndexChanged;
             // 
             // tabPageForward
             // 
@@ -130,9 +130,9 @@
             labelForwardImageIndex.AutoSize = true;
             labelForwardImageIndex.Location = new Point(6, 3);
             labelForwardImageIndex.Name = "labelForwardImageIndex";
-            labelForwardImageIndex.Size = new Size(13, 15);
+            labelForwardImageIndex.Size = new Size(10, 15);
             labelForwardImageIndex.TabIndex = 7;
-            labelForwardImageIndex.Text = "0";
+            labelForwardImageIndex.Text = " ";
             // 
             // pictureBoxForward
             // 
@@ -162,9 +162,9 @@
             labelRearImageIndex.AutoSize = true;
             labelRearImageIndex.Location = new Point(6, 3);
             labelRearImageIndex.Name = "labelRearImageIndex";
-            labelRearImageIndex.Size = new Size(13, 15);
+            labelRearImageIndex.Size = new Size(10, 15);
             labelRearImageIndex.TabIndex = 7;
-            labelRearImageIndex.Text = "0";
+            labelRearImageIndex.Text = " ";
             // 
             // pictureBoxRear
             // 
@@ -179,6 +179,7 @@
             // 
             // tabPageLeft
             // 
+            tabPageLeft.Controls.Add(labelLeftImageIndex);
             tabPageLeft.Controls.Add(pictureBoxLeft);
             tabPageLeft.Location = new Point(4, 24);
             tabPageLeft.Name = "tabPageLeft";
@@ -187,6 +188,15 @@
             tabPageLeft.TabIndex = 2;
             tabPageLeft.Text = "Left";
             tabPageLeft.UseVisualStyleBackColor = true;
+            // 
+            // labelLeftImageIndex
+            // 
+            labelLeftImageIndex.AutoSize = true;
+            labelLeftImageIndex.Location = new Point(6, 3);
+            labelLeftImageIndex.Name = "labelLeftImageIndex";
+            labelLeftImageIndex.Size = new Size(10, 15);
+            labelLeftImageIndex.TabIndex = 1;
+            labelLeftImageIndex.Text = " ";
             // 
             // pictureBoxLeft
             // 
@@ -201,6 +211,7 @@
             // 
             // tabPageRight
             // 
+            tabPageRight.Controls.Add(labelRightImageIndex);
             tabPageRight.Controls.Add(pictureBoxRight);
             tabPageRight.Location = new Point(4, 24);
             tabPageRight.Name = "tabPageRight";
@@ -209,6 +220,15 @@
             tabPageRight.TabIndex = 3;
             tabPageRight.Text = "Right";
             tabPageRight.UseVisualStyleBackColor = true;
+            // 
+            // labelRightImageIndex
+            // 
+            labelRightImageIndex.AutoSize = true;
+            labelRightImageIndex.Location = new Point(6, 3);
+            labelRightImageIndex.Name = "labelRightImageIndex";
+            labelRightImageIndex.Size = new Size(10, 15);
+            labelRightImageIndex.TabIndex = 1;
+            labelRightImageIndex.Text = " ";
             // 
             // pictureBoxRight
             // 
@@ -243,26 +263,18 @@
             // 
             // statusStrip
             // 
-            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel, toolStripStatusLabelImageTAG });
-            statusStrip.Location = new Point(0, 537);
+            statusStrip.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel });
+            statusStrip.Location = new Point(0, 539);
             statusStrip.Name = "statusStrip";
-            statusStrip.Size = new Size(1094, 24);
+            statusStrip.Size = new Size(1094, 22);
             statusStrip.TabIndex = 6;
             statusStrip.Text = "statusStrip1";
             // 
             // toolStripStatusLabel
             // 
             toolStripStatusLabel.Name = "toolStripStatusLabel";
-            toolStripStatusLabel.Size = new Size(256, 19);
+            toolStripStatusLabel.Size = new Size(256, 17);
             toolStripStatusLabel.Text = "Use button \"Open Folder\" to init start directory.";
-            // 
-            // toolStripStatusLabelImageTAG
-            // 
-            toolStripStatusLabelImageTAG.BorderSides = ToolStripStatusLabelBorderSides.Left | ToolStripStatusLabelBorderSides.Top | ToolStripStatusLabelBorderSides.Right | ToolStripStatusLabelBorderSides.Bottom;
-            toolStripStatusLabelImageTAG.Name = "toolStripStatusLabelImageTAG";
-            toolStripStatusLabelImageTAG.Size = new Size(119, 19);
-            toolStripStatusLabelImageTAG.Text = "And open first fotos.";
-            toolStripStatusLabelImageTAG.Click += ToolStripStatusLabelImageTAG_Click;
             // 
             // buttonPast
             // 
@@ -335,8 +347,10 @@
             tabPageRear.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxRear).EndInit();
             tabPageLeft.ResumeLayout(false);
+            tabPageLeft.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLeft).EndInit();
             tabPageRight.ResumeLayout(false);
+            tabPageRight.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxRight).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownShiftimageIndex).EndInit();
             statusStrip.ResumeLayout(false);
@@ -370,6 +384,7 @@
         private Label labelLoading;
         private Button buttonNumberDown;
         private Button buttonNumberUp;
-        private ToolStripStatusLabel toolStripStatusLabelImageTAG;
+        private Label labelLeftImageIndex;
+        private Label labelRightImageIndex;
     }
 }
