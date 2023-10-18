@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Image4glass
 {
@@ -9,6 +10,7 @@ namespace Image4glass
         private string part2;
         private string part3;
         private string extension;
+        private const string basicFolderSaveFileName = "basicfolder.txt";
 
         public bool IsInitializated
         {
@@ -56,11 +58,12 @@ namespace Image4glass
 
         public FilePathBuilder()
         {
-            // За замовчуванням ініціалізуємо поля частинами шляху і розширенням
+            isInitializated = false;
             part1 = string.Empty;
             part2 = string.Empty;
             part3 = string.Empty;
             extension = ".jpg";
+            this.ReadData();
         }
 
         public void Reset()
@@ -71,7 +74,45 @@ namespace Image4glass
             part3 = string.Empty;
             extension = ".jpg";
         }
+        public void SaveData()
+        {
+            // Відкриваємо файл для запису
+            StreamWriter writer = new StreamWriter(basicFolderSaveFileName, false);
 
+            // Записуємо дані до файлу
+            writer.WriteLine(part1);
+
+            // Закриваємо файл
+            writer.Close();
+        }
+
+        private void ReadData()
+        {
+            if (File.Exists(basicFolderSaveFileName))
+            {
+                StreamReader reader = new StreamReader(basicFolderSaveFileName);
+
+                string? data = reader.ReadLine(); reader.Close();
+
+                if (data == null) 
+                { 
+                    part1 = String.Empty; 
+                    isInitializated = false; 
+                }
+                else
+                {
+                    part1 = data; 
+                    isInitializated = true;
+                }
+            }
+        }
+        public bool IsFilePathValid(string path)
+        {
+            // Регулярний вираз для перевірки шляху до файлу
+            string pattern = @"^(?:[\w]\:|\\)(\\[^\/:*?""><|]*)+\\?$";
+
+            return Regex.IsMatch(path, pattern, RegexOptions.IgnoreCase);
+        }
     }
 
 }

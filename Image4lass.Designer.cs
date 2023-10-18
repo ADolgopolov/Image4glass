@@ -293,15 +293,15 @@
             // openBasicFolderToolStripMenuItem
             // 
             openBasicFolderToolStripMenuItem.Name = "openBasicFolderToolStripMenuItem";
-            openBasicFolderToolStripMenuItem.Size = new Size(180, 22);
+            openBasicFolderToolStripMenuItem.Size = new Size(307, 22);
             openBasicFolderToolStripMenuItem.Text = "Open basic folder";
             openBasicFolderToolStripMenuItem.Click += openBasicFolderToolStripMenuItem_Click;
             // 
             // resetBasicFolderToolStripMenuItem
             // 
             resetBasicFolderToolStripMenuItem.Name = "resetBasicFolderToolStripMenuItem";
-            resetBasicFolderToolStripMenuItem.Size = new Size(180, 22);
-            resetBasicFolderToolStripMenuItem.Text = "Reset basic folder";
+            resetBasicFolderToolStripMenuItem.Size = new Size(307, 22);
+            resetBasicFolderToolStripMenuItem.Text = "Reset basic folder (вставляти тільки номер)";
             resetBasicFolderToolStripMenuItem.Click += resetBasicFolderToolStripMenuItem_Click;
             // 
             // buttonPast
@@ -312,7 +312,7 @@
             buttonPast.TabIndex = 7;
             buttonPast.Text = "Paste";
             buttonPast.UseVisualStyleBackColor = true;
-            buttonPast.Click += buttonPast_ClickAsync;
+            buttonPast.Click += buttonPast_Click;
             // 
             // labelLoading
             // 

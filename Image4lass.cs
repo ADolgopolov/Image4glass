@@ -11,32 +11,46 @@ namespace Image4glass
 {
     public partial class Image4lass : Form
     {
-        string folderName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        string labelForwardImageIndex_Text = "Forward";
-        string labelRearImageIndex_Text = "Rear";
-        string labelRightImageIndex_Text = "Right";
-        string labelLeftImageIndex_Text = "Left";
+        string folderName;
 
-        ArrayList folderList = new ArrayList();
+        ArrayList historyFolderList;
 
-        DefaultImageViewer viewer = new DefaultImageViewer();
+        DefaultImageViewer defaultImageViewer;
 
-        FilePathBuilder filePathBuilder = new FilePathBuilder();
+        FilePathBuilder filePathBuilder;
+
+        public static class ImageLabelText
+        {
+            public static string Forward = "Forward";
+            public static string Rear = "Rear";
+            public static string Right = "Right";
+            public static string Left = "Left";
+            public static string Loading = "Loading...";
+        }
 
         public Image4lass()
         {
             InitializeComponent();
+        
+            this.folderName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            this.historyFolderList = new ArrayList();
+            
+            this.filePathBuilder = new FilePathBuilder();
+            this.toolStripStatusLabel.Text = filePathBuilder.Part1;
+            
+            this.defaultImageViewer = new DefaultImageViewer();
         }
 
         private void addNewFolderToList(string newFolder)
         {
-            if (this.folderList.Contains(newFolder))
+            if (this.historyFolderList.Contains(newFolder))
             {
-                this.folderList.RemoveAt(folderList.IndexOf(newFolder));
+                this.historyFolderList.RemoveAt(historyFolderList.IndexOf(newFolder));
             }
-            this.folderList.Insert(0, newFolder);
+            this.historyFolderList.Insert(0, newFolder);
             this.comboBoxFoldreName.Items.Clear();
-            this.comboBoxFoldreName.Items.AddRange(folderList.ToArray());
+            this.comboBoxFoldreName.Items.AddRange(historyFolderList.ToArray());
             this.comboBoxFoldreName.SelectedIndex = 0;
         }
 
@@ -81,28 +95,28 @@ namespace Image4glass
                 switch (tabControlSelectedIndex)
                 {
                     case 0:
-                        labelForwardImageIndex_Text = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
-                        labelRearImageIndex_Text = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
-                        labelLeftImageIndex_Text = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
-                        labelRightImageIndex_Text = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
+                        ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
+                        ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
+                        ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
                         break;
                     case 1:
-                        labelRearImageIndex_Text = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
-                        labelForwardImageIndex_Text = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
-                        labelLeftImageIndex_Text = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
-                        labelRightImageIndex_Text = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
+                        ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
+                        ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
+                        ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
                         break;
                     case 2:
-                        labelLeftImageIndex_Text = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
-                        labelRightImageIndex_Text = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
-                        labelRearImageIndex_Text = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
-                        labelForwardImageIndex_Text = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
+                        ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
+                        ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
+                        ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
                         break;
                     case 3:
-                        labelRightImageIndex_Text = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
-                        labelLeftImageIndex_Text = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
-                        labelRearImageIndex_Text = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
-                        labelForwardImageIndex_Text = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
+                        ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
+                        ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
+                        ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
                         break;
                 }
                 return true;
@@ -143,7 +157,12 @@ namespace Image4glass
             pictureBoxLeft.Image = null;
             pictureBoxRight.Image = null;
         }
-
+        
+        /// <summary>
+        /// Блокуємо і розблоковуємо елементи керування, що впливають на зміну номера зображення, щоб не спричинити конфлікт з уже запущеним асинхронним методом
+        /// завантаження зображень
+        /// </summary>
+        /// <param name="isEnable"></param>
         private void enabledCommandTools(bool isEnable)
         {
             buttonPast.Enabled = isEnable;
@@ -153,15 +172,19 @@ namespace Image4glass
             buttonOpenFolder.Enabled = isEnable;
             numericUpDownShiftimageIndex.Enabled = isEnable;
         }
-
+        /// <summary>
+        /// Тут відбувається вся магія. Міняється номер, запускається загрузка зображень.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void numericUpDownNumber_ValueChanged(object sender, EventArgs e)
         {
             this.enabledCommandTools(false);
 
-            this.labelForwardImageIndex.Text = "Loading...";
-            this.labelRearImageIndex.Text = "Loading...";
-            this.labelLeftImageIndex.Text = "Loading...";
-            this.labelRightImageIndex.Text = "Loading...";
+            this.labelForwardImageIndex.Text = ImageLabelText.Loading;
+            this.labelRearImageIndex.Text = ImageLabelText.Loading;
+            this.labelLeftImageIndex.Text = ImageLabelText.Loading;
+            this.labelRightImageIndex.Text = ImageLabelText.Loading;
             try
             {
                 await this.LoadImages(this.tabControl.SelectedIndex);
@@ -170,10 +193,10 @@ namespace Image4glass
             {
                 this.enabledCommandTools(true);
                 this.numericUpDownFotoNumber.Focus();
-                this.labelForwardImageIndex.Text = this.labelForwardImageIndex_Text;
-                this.labelRearImageIndex.Text = this.labelRearImageIndex_Text;
-                this.labelLeftImageIndex.Text = this.labelLeftImageIndex_Text;
-                this.labelRightImageIndex.Text = this.labelRightImageIndex_Text;
+                this.labelForwardImageIndex.Text = ImageLabelText.Forward;
+                this.labelRearImageIndex.Text = ImageLabelText.Rear;
+                this.labelLeftImageIndex.Text = ImageLabelText.Left;
+                this.labelRightImageIndex.Text = ImageLabelText.Right;
             }
         }
 
@@ -202,26 +225,34 @@ namespace Image4glass
             */
             string imagePath = ((PictureBox)sender).ImageLocation;
 
-            viewer.OpenImage(imagePath);
+            defaultImageViewer.OpenImage(imagePath);
         }
-        private async void buttonPast_ClickAsync(object sender, EventArgs e)
+        private void buttonPast_Click(object sender, EventArgs e)
         {
-            //string filePath = builder.FullPath;
             if (Clipboard.ContainsText())
             {
                 if (this.filePathBuilder.IsInitializated)
                 {
                     string part2 = Clipboard.GetText();
-                    filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run ", "Photos\\Run ");
+                    try
+                    {
+                        if (part2.Contains("_") && part2.Contains("Run ")) 
+                        { 
+                        filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run ", "Photos\\Run ");
+                        }
+                    }
+                    catch (Exception ex) 
+                    {
+                        MessageBox.Show($"Помилка парсування шляху: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     int lastSeparatorIndex = part2.LastIndexOf("_") + 1;
                     filePathBuilder.Part3 = part2.Substring(lastSeparatorIndex, part2.Length - lastSeparatorIndex);
-                    if (File.Exists(filePathBuilder.FullImageFilePath))
+                    if (this.filePathBuilder.IsFilePathValid(filePathBuilder.FullImageFilePath))
                     {
 
                         folderNameChange(filePathBuilder.RunFolderFullPath);
                         addNewFolderToList(filePathBuilder.RunFolderFullPath);
                         this.numericUpDownFotoNumber.Value = int.Parse(filePathBuilder.Part3);
-                        await this.LoadImages(this.tabControl.SelectedIndex);
                     }
                     else
                     {
@@ -282,14 +313,14 @@ namespace Image4glass
 
         private void SaveFolderListToFile()
         {
-            int foldersAmount = Math.Min(10, folderList.Count);
+            int foldersAmount = Math.Min(10, historyFolderList.Count);
             try
             {
                 using (StreamWriter writer = new StreamWriter("folderList.txt"))
                 {
                     for (int i = 0; i < foldersAmount; i++)
                     {
-                        writer.WriteLine(this.folderList[i]);
+                        writer.WriteLine(this.historyFolderList[i]);
                     }
                 }
             }
@@ -299,7 +330,7 @@ namespace Image4glass
             }
         }
 
-        public void LoadFolderListFromFile()
+        private void LoadFolderListFromFile()
         {
             string filePath = "folderList.txt";
             if (File.Exists(filePath))
@@ -311,7 +342,7 @@ namespace Image4glass
                         string? line;
                         while ((line = reader.ReadLine()) != null)
                         {
-                            folderList.Add(line);
+                            historyFolderList.Add(line);
                         }
                     }
                 }
@@ -321,20 +352,33 @@ namespace Image4glass
                 }
             }
         }
-
+        /// <summary>
+        /// Закриває форму. Зберігаєм корисні змінні по файлах:
+        /// історія робочих директорій;
+        /// базова директорія.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Image4lass_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.SaveFolderListToFile();
+            this.filePathBuilder.SaveData();
         }
 
+        /// <summary>
+        /// При загрузці форми 
+        /// Зчитуєм файл з набором директорій, що відкривались недавно
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Image4lass_Load(object sender, EventArgs e)
         {
             this.LoadFolderListFromFile();
 
-            if (this.folderList.Count > 0)
+            if (this.historyFolderList.Count > 0)
             {
                 this.comboBoxFoldreName.Items.Clear();
-                this.comboBoxFoldreName.Items.AddRange(folderList.ToArray());
+                this.comboBoxFoldreName.Items.AddRange(historyFolderList.ToArray());
                 // Disable edit text in combobox
                 comboBoxFoldreName.DropDownStyle = ComboBoxStyle.DropDownList;
 
@@ -352,7 +396,7 @@ namespace Image4glass
 
         private string TakeFirstElementOfArray()
         {
-            string? str = (string?)this.folderList[0];
+            string? str = (string?)this.historyFolderList[0];
             if (str is not null)
                 return str.ToString();
             else return "";
