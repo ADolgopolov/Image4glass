@@ -75,7 +75,7 @@
             // numericUpDownFotoNumber
             // 
             numericUpDownFotoNumber.Location = new Point(76, 6);
-            numericUpDownFotoNumber.Maximum = new decimal(new int[] { 20000, 0, 0, 0 });
+            numericUpDownFotoNumber.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numericUpDownFotoNumber.Name = "numericUpDownFotoNumber";
             numericUpDownFotoNumber.Size = new Size(81, 23);
             numericUpDownFotoNumber.TabIndex = 0;

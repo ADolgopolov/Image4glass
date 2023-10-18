@@ -1,5 +1,6 @@
-namespace Image4glass
+﻿namespace Image4glass
 {
+    
     internal static class Program
     {
         /// <summary>

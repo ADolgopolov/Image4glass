@@ -31,14 +31,14 @@ namespace Image4glass
         public Image4lass()
         {
             InitializeComponent();
-        
+
             this.folderName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             this.historyFolderList = new ArrayList();
-            
+
             this.filePathBuilder = new FilePathBuilder();
             this.toolStripStatusLabel.Text = filePathBuilder.Part1;
-            
+
             this.defaultImageViewer = new DefaultImageViewer();
         }
 
@@ -72,7 +72,16 @@ namespace Image4glass
                 path += @"\" + FileNameIndex + ".jpg";
                 if (File.Exists(path))
                 {
-                    pictureBox.Load(path);
+                    try
+                    {
+                        pictureBox.Load(path);
+                        
+                    }
+                    catch (Exception ex) 
+                    {
+                        MessageBox.Show(ex.Message);
+                        pictureBox.Image = null; 
+                    }
                     return Path.GetFileName(Path.GetDirectoryName(path)) + " " + Path.GetFileNameWithoutExtension(path);
                 }
                 else
@@ -157,7 +166,7 @@ namespace Image4glass
             pictureBoxLeft.Image = null;
             pictureBoxRight.Image = null;
         }
-        
+
         /// <summary>
         /// Блокуємо і розблоковуємо елементи керування, що впливають на зміну номера зображення, щоб не спричинити конфлікт з уже запущеним асинхронним методом
         /// завантаження зображень
@@ -236,18 +245,18 @@ namespace Image4glass
                     string part2 = Clipboard.GetText();
                     try
                     {
-                        if (part2.Contains("_") && part2.Contains("Run ")) 
-                        { 
-                        filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run ", "Photos\\Run ");
+                        if (part2.Contains("_") && part2.Contains("Run "))
+                        {
+                            filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run ", "Photos\\Run ");
                         }
                     }
-                    catch (Exception ex) 
+                    catch (Exception ex)
                     {
                         MessageBox.Show($"Помилка парсування шляху: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     int lastSeparatorIndex = part2.LastIndexOf("_") + 1;
                     filePathBuilder.Part3 = part2.Substring(lastSeparatorIndex, part2.Length - lastSeparatorIndex);
-                    if (this.filePathBuilder.IsFilePathValid(filePathBuilder.FullImageFilePath))
+                    if (this.filePathBuilder.IsFilePathValid(filePathBuilder.FullImageFilePath) && Regex.IsMatch(filePathBuilder.Part3, @"^\d+$"))
                     {
 
                         folderNameChange(filePathBuilder.RunFolderFullPath);
@@ -308,7 +317,10 @@ namespace Image4glass
 
         private void buttonNumberUp_Click(object sender, EventArgs e)
         {
-            this.numericUpDownFotoNumber.Value++;
+            if (this.numericUpDownFotoNumber.Value < this.numericUpDownFotoNumber.Maximum)
+            {
+                this.numericUpDownFotoNumber.Value++;
+            }
         }
 
         private void SaveFolderListToFile()
