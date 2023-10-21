@@ -92,53 +92,33 @@ namespace Image4glass
                 if(deltaX < 0)
                 {
                     panel.HorizontalScroll.Value = Math.Max(0, panel.HorizontalScroll.Value - Math.Abs(deltaX));
-                    //panel.HorizontalScroll.Value = Math.Min(panel.HorizontalScroll.Value - deltaX, panel.HorizontalScroll.Maximum);
-                    /*
-                    if (deltaY > 0)
+                    if (deltaY < 0)
                     {
-                        panel.VerticalScroll.Value = Math.Min(panel.VerticalScroll.Value + deltaY, panel.VerticalScroll.Maximum);
+                        panel.VerticalScroll.Value = Math.Max(0, panel.VerticalScroll.Value + deltaY);
                         lastMousePosition = e.Location;
                     }
                     else
                     {
-                        panel.VerticalScroll.Value = Math.Max(panel.VerticalScroll.Minimum, panel.VerticalScroll.Value + deltaY);
+                        panel.VerticalScroll.Value = Math.Max(0, panel.VerticalScroll.Value + deltaY);
                         lastMousePosition = e.Location;
                     }
-                    */
                     lastMousePosition = e.Location;
                 }
                 else
                 {
                     panel.HorizontalScroll.Value = Math.Max(0,  panel.HorizontalScroll.Value + Math.Abs(deltaX));
-                    /*
-                    if (deltaY > 0)
+                    if (deltaY < 0)
                     {
-                        panel.VerticalScroll.Value = Math.Min(panel.VerticalScroll.Value + deltaY, panel.VerticalScroll.Maximum);
+                        panel.VerticalScroll.Value = Math.Max(0, panel.VerticalScroll.Value + deltaY);
                         lastMousePosition = e.Location;
                     }
                     else
                     {
-                        panel.VerticalScroll.Value = Math.Max(panel.VerticalScroll.Minimum, panel.VerticalScroll.Value + deltaY);
+                        panel.VerticalScroll.Value = Math.Max(0, panel.VerticalScroll.Value + deltaY);
                         lastMousePosition = e.Location;
                     }
-                    */
                     lastMousePosition = e.Location;
                 }
-                /*
-                if (deltaY > 0)
-                {
-                    panel.VerticalScroll.Value = Math.Min(panel.VerticalScroll.Value + deltaY, panel.VerticalScroll.Maximum);
-                    lastMousePosition = e.Location;
-                }
-                else
-                {
-                    panel.VerticalScroll.Value = Math.Max(panel.VerticalScroll.Minimum, panel.VerticalScroll.Value + deltaY);
-                    lastMousePosition = e.Location;
-                }
-                */
-                //panel.VerticalScroll.Value = Math.Max(0, panel.VerticalScroll.Value - deltaY);
-
-
             }
         }
 
