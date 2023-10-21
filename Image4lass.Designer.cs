@@ -147,6 +147,7 @@
             pictureBoxForward.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxForward.TabIndex = 0;
             pictureBoxForward.TabStop = false;
+            pictureBoxForward.Click += pictureBoxForward_Click;
             pictureBoxForward.DoubleClick += pictureBox_DoubleClick;
             // 
             // tabPageRear

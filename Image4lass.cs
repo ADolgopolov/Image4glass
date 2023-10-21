@@ -67,7 +67,7 @@ namespace Image4glass
         private string LoadImageOnTab(string tabFolderName, PictureBox pictureBox, decimal FileNameIndex)
         {
             string path = folderName + tabFolderName;
-            
+
             path += @"\" + FileNameIndex + ".jpg";
             if (File.Exists(path))
             {
@@ -438,6 +438,15 @@ namespace Image4glass
         {
             this.toolStripStatusLabel.Text = "Set basic folder to recognize string in clipboard";
             filePathBuilder.Reset();
+        }
+
+        private void pictureBoxForward_Click(object sender, EventArgs e)
+        {
+            // Дізнаємося шлях зображення
+            //string imagePath = pictureBox.Image.ImageLocation;
+            ZoomImageForm zoomImage = new ZoomImageForm(pictureBoxForward.Image, pictureBoxForward.Size);
+            zoomImage.Text = labelForwardImageIndex.Text;
+            zoomImage.Show();
         }
     }
 }
