@@ -363,7 +363,7 @@
             Controls.Add(numericUpDownFotoNumber);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Image4lass";
-            Text = "Image4lass";
+            Text = "Image4lass 20-10-2023";
             FormClosing += Image4lass_FormClosing;
             Load += Image4lass_Load;
             ((System.ComponentModel.ISupportInitialize)numericUpDownFotoNumber).EndInit();

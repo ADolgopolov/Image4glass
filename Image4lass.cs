@@ -67,33 +67,26 @@ namespace Image4glass
         private string LoadImageOnTab(string tabFolderName, PictureBox pictureBox, decimal FileNameIndex)
         {
             string path = folderName + tabFolderName;
-            if (Directory.Exists(path))
+            
+            path += @"\" + FileNameIndex + ".jpg";
+            if (File.Exists(path))
             {
-                path += @"\" + FileNameIndex + ".jpg";
-                if (File.Exists(path))
+                try
                 {
-                    try
-                    {
-                        pictureBox.Load(path);
-                        
-                    }
-                    catch (Exception ex) 
-                    {
-                        MessageBox.Show(ex.Message);
-                        pictureBox.Image = null; 
-                    }
-                    return Path.GetFileName(Path.GetDirectoryName(path)) + " " + Path.GetFileNameWithoutExtension(path);
+                    pictureBox.Load(path);
+
                 }
-                else
+                catch (Exception ex)
                 {
+                    MessageBox.Show(ex.Message);
                     pictureBox.Image = null;
-                    return path + "; - The file does not exist.";
                 }
+                return Path.GetFileName(Path.GetDirectoryName(path)) + " " + Path.GetFileNameWithoutExtension(path);
             }
             else
             {
                 pictureBox.Image = null;
-                return path + "; - The folder does not exist.";
+                return path + "; - The file does not exist.";
             }
         }
 
@@ -245,6 +238,11 @@ namespace Image4glass
                     string part2 = Clipboard.GetText();
                     try
                     {
+                        part2 = Regex.Replace(part2, @"\p{C}+", ""); // for desktop version 
+                        if (part2.Contains("-") && part2.Contains("Run "))
+                        {
+                            filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("-")).Replace("Run ", "Photos\\Run ");
+                        }
                         if (part2.Contains("_") && part2.Contains("Run "))
                         {
                             filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run ", "Photos\\Run ");
@@ -254,14 +252,23 @@ namespace Image4glass
                     {
                         MessageBox.Show($"Помилка парсування шляху: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    int lastSeparatorIndex = part2.LastIndexOf("_") + 1;
+                    int lastSeparatorIndex = 0;
+                    if (part2.Contains("-"))
+                    {
+                        lastSeparatorIndex = part2.LastIndexOf("-") + 1;
+                    }
+                    if (part2.Contains("_"))
+                    {
+                        lastSeparatorIndex = part2.LastIndexOf("_") + 1;
+                    }
                     filePathBuilder.Part3 = part2.Substring(lastSeparatorIndex, part2.Length - lastSeparatorIndex);
-                    if (this.filePathBuilder.IsFilePathValid(filePathBuilder.FullImageFilePath) && Regex.IsMatch(filePathBuilder.Part3, @"^\d+$"))
+
+                    if (int.TryParse(filePathBuilder.Part3, out int fileNumber))
                     {
 
                         folderNameChange(filePathBuilder.RunFolderFullPath);
                         addNewFolderToList(filePathBuilder.RunFolderFullPath);
-                        this.numericUpDownFotoNumber.Value = int.Parse(filePathBuilder.Part3);
+                        this.numericUpDownFotoNumber.Value = fileNumber;
                     }
                     else
                     {
@@ -270,7 +277,6 @@ namespace Image4glass
                 }
                 else
                 {
-                    int value;
                     string clipboardTextString = Clipboard.GetText();
                     int cutStringToIndex = 0;
                     int digitsAmount = 0;
@@ -289,15 +295,19 @@ namespace Image4glass
 
                     if (digitsAmount == 0)
                     {
-                        MessageBox.Show("Буфер обміну не містить рядок з номером.", "Інформація");
+                        MessageBox.Show("Буфер обміну не містить рядок з номером.", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
                         string subStr = clipboardTextString.Substring(cutStringToIndex);
-                        if (Regex.IsMatch(subStr, @"^\d+$"))
+
+                        if (int.TryParse(subStr, out int fileNumber))
                         {
-                            value = int.Parse(subStr);
-                            this.numericUpDownFotoNumber.Value = value;
+                            this.numericUpDownFotoNumber.Value = fileNumber;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Рядок не є цілим числом.");
                         }
                     }
                 }

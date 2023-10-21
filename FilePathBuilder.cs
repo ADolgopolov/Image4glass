@@ -29,7 +29,17 @@ namespace Image4glass
         public string Part2
         {
             get { return part2; }
-            set { part2 = value.Replace("_", "\\"); }
+            set 
+            {
+                    if (value.Contains("-"))
+                    { 
+                        part2 = value.Replace("-", "\\"); 
+                    }
+                    else
+                    {
+                        part2 = value.Replace("_", "\\");
+                    }
+            }
         }
 
         public string Part3
@@ -94,7 +104,7 @@ namespace Image4glass
 
                 string? data = reader.ReadLine(); reader.Close();
 
-                if (data == null) 
+                if (String.IsNullOrEmpty(data)) 
                 { 
                     part1 = String.Empty; 
                     isInitializated = false; 
@@ -109,7 +119,8 @@ namespace Image4glass
         public bool IsFilePathValid(string path)
         {
             // Регулярний вираз для перевірки шляху до файлу
-            string pattern = @"^(?:[\w]\:|\\)(\\[^\/:*?""><|]*)+\\?$";
+            //string pattern = @"^(?:[\w]\:|\\)(\\[^\/:*?""><|]*)+\\?$";
+              string pattern = @"^(?:[\w]\:|\\)([^\/:*?""><|]*)+\\?$";
 
             return Regex.IsMatch(path, pattern, RegexOptions.IgnoreCase);
         }
