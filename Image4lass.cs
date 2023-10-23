@@ -243,9 +243,12 @@ namespace Image4glass
                         {
                             filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("-")).Replace("Run ", "Photos\\Run ");
                         }
-                        if (part2.Contains("_") && part2.Contains("Run "))
+                        else
                         {
-                            filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run ", "Photos\\Run ");
+                            if (part2.Contains("_") && part2.Contains("Run "))
+                            {
+                                filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run ", "Photos\\Run ");
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -257,9 +260,12 @@ namespace Image4glass
                     {
                         lastSeparatorIndex = part2.LastIndexOf("-") + 1;
                     }
-                    if (part2.Contains("_"))
+                    else
                     {
-                        lastSeparatorIndex = part2.LastIndexOf("_") + 1;
+                        if (part2.Contains("_"))
+                        {
+                            lastSeparatorIndex = part2.LastIndexOf("_") + 1;
+                        }
                     }
                     filePathBuilder.Part3 = part2.Substring(lastSeparatorIndex, part2.Length - lastSeparatorIndex);
 
@@ -442,9 +448,12 @@ namespace Image4glass
 
         private void pictureBoxForward_Click(object sender, EventArgs e)
         {
-            // Дізнаємося шлях зображення
-            //string imagePath = pictureBox.Image.ImageLocation;
-            ZoomImageForm zoomImage = new ZoomImageForm(pictureBoxForward.Image, pictureBoxForward.Size);
+
+        }
+
+        private void buttonForwardStartZoomImageForm_Click(object sender, EventArgs e)
+        {
+            ZoomImageForm zoomImage = new ZoomImageForm(pictureBoxForward.Image);
             zoomImage.Text = labelForwardImageIndex.Text;
             zoomImage.Show();
         }

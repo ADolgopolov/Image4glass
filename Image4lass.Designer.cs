@@ -34,6 +34,7 @@
             comboBoxFoldreName = new ComboBox();
             tabControl = new TabControl();
             tabPageForward = new TabPage();
+            buttonForwardStartZoomImageForm = new Button();
             labelForwardImageIndex = new Label();
             pictureBoxForward = new PictureBox();
             tabPageRear = new TabPage();
@@ -119,6 +120,7 @@
             // 
             // tabPageForward
             // 
+            tabPageForward.Controls.Add(buttonForwardStartZoomImageForm);
             tabPageForward.Controls.Add(labelForwardImageIndex);
             tabPageForward.Controls.Add(pictureBoxForward);
             tabPageForward.Location = new Point(4, 24);
@@ -128,6 +130,18 @@
             tabPageForward.TabIndex = 0;
             tabPageForward.Text = "Forward";
             tabPageForward.UseVisualStyleBackColor = true;
+            // 
+            // buttonForwardStartZoomImageForm
+            // 
+            buttonForwardStartZoomImageForm.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonForwardStartZoomImageForm.AutoSize = true;
+            buttonForwardStartZoomImageForm.Location = new Point(1030, 3);
+            buttonForwardStartZoomImageForm.Name = "buttonForwardStartZoomImageForm";
+            buttonForwardStartZoomImageForm.Size = new Size(41, 25);
+            buttonForwardStartZoomImageForm.TabIndex = 12;
+            buttonForwardStartZoomImageForm.Text = ">>";
+            buttonForwardStartZoomImageForm.UseVisualStyleBackColor = true;
+            buttonForwardStartZoomImageForm.Click += buttonForwardStartZoomImageForm_Click;
             // 
             // labelForwardImageIndex
             // 
@@ -147,7 +161,6 @@
             pictureBoxForward.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxForward.TabIndex = 0;
             pictureBoxForward.TabStop = false;
-            pictureBoxForward.Click += pictureBoxForward_Click;
             pictureBoxForward.DoubleClick += pictureBox_DoubleClick;
             // 
             // tabPageRear
@@ -364,7 +377,7 @@
             Controls.Add(numericUpDownFotoNumber);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Image4lass";
-            Text = "Image4lass 20-10-2023";
+            Text = "Image4lass 23-10-2023";
             FormClosing += Image4lass_FormClosing;
             Load += Image4lass_Load;
             ((System.ComponentModel.ISupportInitialize)numericUpDownFotoNumber).EndInit();
@@ -419,5 +432,6 @@
         private ToolStripMenuItem openBasicFolderToolStripMenuItem;
         private FolderBrowserDialog basicFolderBrowserDialog;
         private ToolStripMenuItem resetBasicFolderToolStripMenuItem;
+        private Button buttonForwardStartZoomImageForm;
     }
 }

@@ -14,36 +14,40 @@ namespace Image4glass
     {
         private float zoomFactor = 0.2f; // Початковий масштаб
         private const float ZoomIncrement = 0.1f; // Збільшення масштабу при кожній прокрутці
-        private Point lastMousePosition;
-        private bool isLeftMouseDown = false;
-        public ZoomImageForm(Image img, Size picSize)
+        public ZoomImageForm(Image img)
         {
             InitializeComponent();
             this.pictureBox.Image = img;
-            // Змінюємо розмір зображення на той,що був у головному вікні
-            pictureBox.Size = picSize;
-            // При зміні масштабу, центруємо PictureBox
             CenterPictureBox();
-            //pictureBox.MouseWheel += PictureBox_MouseWheel;
         }
         private void PictureBox_MouseWheel(object sender, MouseEventArgs e)
         {
-            //MessageBox.Show("ssds");
             // Змінюємо масштаб відповідно до кількості клацань колеса мишки
             if (e.Delta > 0)
             {
-                zoomFactor += (zoomFactor < 1.4f) ? ZoomIncrement : 0;
+                zoomFactor += (zoomFactor < 1.6f) ? ZoomIncrement : 0;
             }
             else
             {
                 zoomFactor -= (zoomFactor > 0.2f) ? ZoomIncrement : 0;
             }
 
+            // Зберігаємо старі розміри PictureBox
+            int previousWidth = pictureBox.Width;
+            int previousHeight = pictureBox.Height;
+
             // Змінюємо розмір зображення
             pictureBox.Width = (int)(pictureBox.Image.Width * zoomFactor);
             pictureBox.Height = (int)(pictureBox.Image.Height * zoomFactor);
-            // При зміні масштабу, центруємо PictureBox
-            CenterPictureBox();
+
+            // При зміні масштабу, центруємо PictureBox по курсору
+            pictureBox.Left -= (int)((pictureBox.Width - previousWidth) / 2);
+            pictureBox.Top -= (int)((pictureBox.Height - previousHeight) / 2);
+
+            if (pictureBox.Size.Height < this.Height)
+            {
+                CenterPictureBox();
+            }
         }
 
         private void panel_Resize(object sender, EventArgs e)
@@ -71,62 +75,10 @@ namespace Image4glass
             pictureBox.Location = new Point(x, y);
         }
 
-        private void pictureBox_Click(object sender, EventArgs e)
+        private void pictureBox_MouseClick(object sender, MouseEventArgs e)
         {
-            MessageBox.Show(pictureBox.Location.Y.ToString());
-        }
-
-        private void pictureBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            lastMousePosition = e.Location;
-            isLeftMouseDown = true;
-        }
-
-        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isLeftMouseDown)
-            {
-                int deltaX = e.X - lastMousePosition.X;
-                int deltaY = e.Y - lastMousePosition.Y;
-                
-                if(deltaX < 0)
-                {
-                    panel.HorizontalScroll.Value = Math.Max(0, panel.HorizontalScroll.Value - Math.Abs(deltaX));
-                    if (deltaY < 0)
-                    {
-                        panel.VerticalScroll.Value = Math.Max(0, panel.VerticalScroll.Value + deltaY);
-                        lastMousePosition = e.Location;
-                    }
-                    else
-                    {
-                        panel.VerticalScroll.Value = Math.Max(0, panel.VerticalScroll.Value + deltaY);
-                        lastMousePosition = e.Location;
-                    }
-                    lastMousePosition = e.Location;
-                }
-                else
-                {
-                    panel.HorizontalScroll.Value = Math.Max(0,  panel.HorizontalScroll.Value + Math.Abs(deltaX));
-                    if (deltaY < 0)
-                    {
-                        panel.VerticalScroll.Value = Math.Max(0, panel.VerticalScroll.Value + deltaY);
-                        lastMousePosition = e.Location;
-                    }
-                    else
-                    {
-                        panel.VerticalScroll.Value = Math.Max(0, panel.VerticalScroll.Value + deltaY);
-                        lastMousePosition = e.Location;
-                    }
-                    lastMousePosition = e.Location;
-                }
-            }
-        }
-
-        private void pictureBox_MouseUp(object sender, MouseEventArgs e)
-        {
-            isLeftMouseDown = false;
-            //panel.HorizontalScroll.Value = Math.Max(0, panel.HorizontalScroll.Value - e.X + lastMousePosition.X);
-            //panel.VerticalScroll.Value = Math.Max(0, panel.VerticalScroll.Value - e.Y + lastMousePosition.Y);
+            pictureBox.Left = (int)(this.Width / 2 - e.Location.X);
+            pictureBox.Top = (int)(this.Height / 2 - e.Location.Y);
         }
     }
 }

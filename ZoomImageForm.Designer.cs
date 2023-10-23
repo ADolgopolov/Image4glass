@@ -36,7 +36,6 @@
             // 
             // panel
             // 
-            panel.AutoScroll = true;
             panel.AutoSize = true;
             panel.BackColor = SystemColors.ControlDarkDark;
             panel.Controls.Add(pictureBox);
@@ -49,16 +48,13 @@
             // 
             // pictureBox
             // 
-            pictureBox.Cursor = Cursors.SizeAll;
-            pictureBox.Location = new Point(256, 256);
+            pictureBox.Location = new Point(91, 81);
             pictureBox.Name = "pictureBox";
             pictureBox.Size = new Size(512, 512);
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.TabIndex = 0;
             pictureBox.TabStop = false;
-            pictureBox.MouseDown += pictureBox_MouseDown;
-            pictureBox.MouseMove += pictureBox_MouseMove;
-            pictureBox.MouseUp += pictureBox_MouseUp;
+            pictureBox.MouseClick += pictureBox_MouseClick;
             pictureBox.MouseWheel += PictureBox_MouseWheel;
             // 
             // ZoomImageForm
