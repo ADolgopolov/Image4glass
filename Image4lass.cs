@@ -206,9 +206,25 @@ namespace Image4glass
 
                 if (!this.checkBoxFixZoom.Checked)
                 {
-                    pictureBoxForward.Width = this.tabPageForward.Height - 6;
-                    pictureBoxForward.Height = pictureBoxForward.Width;
-                    CenterPictureBox();
+                    PictureBox senderPictureBox = new PictureBox();
+                    switch (this.tabControl.SelectedIndex)
+                    {
+                        case 0:
+                            senderPictureBox = this.pictureBoxForward;
+                            break;
+                        case 1:
+                            senderPictureBox = this.pictureBoxRear;
+                            break;
+                        case 2:
+                            senderPictureBox = this.pictureBoxLeft;
+                            break;
+                        case 3:
+                            senderPictureBox = this.pictureBoxRight;
+                            break;
+                    }
+                    senderPictureBox.Width = this.tabPageForward.Height - 6;
+                    senderPictureBox.Height = senderPictureBox.Width;
+                    CenterPictureBox(senderPictureBox);
                 }
             }
         }
@@ -482,39 +498,28 @@ namespace Image4glass
             }
 
             // Зберігаємо старі розміри PictureBox
-            int previousWidth = pictureBoxForward.Width;
-            int previousHeight = pictureBoxForward.Height;
+            int previousWidth = senderPictureBox.Width;
+            int previousHeight = senderPictureBox.Height;
 
             // Змінюємо розмір зображення
-            pictureBoxForward.Width = (int)(pictureBoxForward.Image.Width * zoomFactor);
-            pictureBoxForward.Height = (int)(pictureBoxForward.Image.Height * zoomFactor);
+            senderPictureBox.Width = (int)(senderPictureBox.Image.Width * zoomFactor);
+            senderPictureBox.Height = (int)(senderPictureBox.Image.Height * zoomFactor);
 
             // При зміні масштабу, центруємо PictureBox по курсору
-            pictureBoxForward.Left -= (int)((pictureBoxForward.Width - previousWidth) / 2);
-            pictureBoxForward.Top -= (int)((pictureBoxForward.Height - previousHeight) / 2);
+            senderPictureBox.Left -= (int)((senderPictureBox.Width - previousWidth) / 2);
+            senderPictureBox.Top -= (int)((senderPictureBox.Height - previousHeight) / 2);
 
-            if (pictureBoxForward.Size.Height < this.Height)
+            if (senderPictureBox.Size.Height < this.Height)
             {
-                CenterPictureBox();
+                CenterPictureBox(senderPictureBox);
             }
         }
-        private void CenterPictureBox()
+
+        private void CenterPictureBox(PictureBox senderPictureBox)
         {
-            int x = (int)((tabPageForward.Width - pictureBoxForward.Width) / 2);
-            int y = (int)((tabPageForward.Height - pictureBoxForward.Height) / 2);
-
-            if (x < 0)
-            {
-                x = 0;
-                tabPageForward.HorizontalScroll.Value = 0;
-            }
-            if (y < 0)
-            {
-                y = 0;
-                tabPageForward.VerticalScroll.Value = 0;
-            }
-
-            pictureBoxForward.Location = new Point(x, y);
+            int x = (int)((tabPageForward.Width - senderPictureBox.Width) / 2);
+            int y = (int)((tabPageForward.Height - senderPictureBox.Height) / 2);
+            senderPictureBox.Location = new Point(x, y);
         }
     }
 }

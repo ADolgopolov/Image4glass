@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,21 +82,53 @@ namespace Image4glass
             pictureBox.Top = (int)(this.Height / 2 - e.Location.Y);
         }
 
-        private void ZoomImageForm_KeyPress(object sender, KeyPressEventArgs e)
+        private async void ZoomImageForm_KeyUp(object sender, KeyEventArgs e)
         {
-
-        }
-
-        private void ZoomImageForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Right)
+            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.Up)
             {
+                await LoadImageAsync(1);
+            }
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Down)
+            {
+                await LoadImageAsync(-1);
             }
         }
 
-        private void ZoomImageForm_KeyUp(object sender, KeyEventArgs e)
+        private async Task LoadImageAsync(int fileIncrement)
+        {
+            try
+            {
+                string newFileImage = this.Text;
+                this.Text = "Loading...";
+                Image image = await Task.Run(() => LoadImageFromPath(fileIncrement, ref newFileImage));
+
+                // Після завантаження зображення встановлюємо його в PictureBox
+                pictureBox.Image = image;
+                this.Text = newFileImage;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Помилка завантаження зображення: " + ex.Message);
+            }
+        }
+        private Image LoadImageFromPath(int fileNameIncrement, ref string newFullPath)
         {
 
+            string filePath = newFullPath;
+            if (int.TryParse(Path.GetFileNameWithoutExtension(filePath), out int fileNameIndex))
+            {
+                fileNameIndex += fileNameIncrement;
+                string? directory = Path.GetDirectoryName(filePath);
+                directory ??= string.Empty;
+                newFullPath = Path.Combine(directory, fileNameIndex.ToString() + ".jpg");
+                if (File.Exists(newFullPath))
+                {
+                    return Image.FromFile(newFullPath);
+                }
+            }
+            newFullPath = "File request out of name range. Close this window.";
+            return new Bitmap(512, 512);
         }
     }
 }

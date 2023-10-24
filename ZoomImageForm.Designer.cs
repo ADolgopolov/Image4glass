@@ -69,7 +69,6 @@
             Name = "ZoomImageForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ZoomImageForm";
-            KeyDown += ZoomImageForm_KeyDown;
             KeyUp += ZoomImageForm_KeyUp;
             panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();

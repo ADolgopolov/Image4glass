@@ -186,6 +186,7 @@ namespace Image4glass
             pictureBoxRear.TabIndex = 0;
             pictureBoxRear.TabStop = false;
             pictureBoxRear.MouseClick += pictureBoxCentredImage_MouseClick;
+            pictureBoxRear.MouseWheel += pictureBoxZoomImage_MouseWheel;
             // 
             // tabPageLeft
             // 
@@ -218,6 +219,7 @@ namespace Image4glass
             pictureBoxLeft.TabIndex = 0;
             pictureBoxLeft.TabStop = false;
             pictureBoxLeft.MouseClick += pictureBoxCentredImage_MouseClick;
+            pictureBoxLeft.MouseWheel += pictureBoxZoomImage_MouseWheel;
             // 
             // tabPageRight
             // 
@@ -250,6 +252,7 @@ namespace Image4glass
             pictureBoxRight.TabIndex = 0;
             pictureBoxRight.TabStop = false;
             pictureBoxRight.MouseClick += pictureBoxCentredImage_MouseClick;
+            pictureBoxRight.MouseWheel += pictureBoxZoomImage_MouseWheel;
             // 
             // buttonForwardStartViewer
             // 
