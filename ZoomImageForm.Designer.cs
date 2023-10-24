@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZoomImageForm));
             panel = new Panel();
             pictureBox = new PictureBox();
             panel.SuspendLayout();
@@ -63,9 +64,13 @@
             AutoScroll = true;
             ClientSize = new Size(1008, 985);
             Controls.Add(panel);
+            Cursor = Cursors.Cross;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ZoomImageForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ZoomImageForm";
+            KeyDown += ZoomImageForm_KeyDown;
+            KeyUp += ZoomImageForm_KeyUp;
             panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
             ResumeLayout(false);

@@ -80,5 +80,22 @@ namespace Image4glass
             pictureBox.Left = (int)(this.Width / 2 - e.Location.X);
             pictureBox.Top = (int)(this.Height / 2 - e.Location.Y);
         }
+
+        private void ZoomImageForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void ZoomImageForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Right)
+            {
+            }
+        }
+
+        private void ZoomImageForm_KeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

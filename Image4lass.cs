@@ -28,6 +28,9 @@ namespace Image4glass
             public static string Loading = "Loading...";
         }
 
+        private float zoomFactor = 0.2f; // Початковий масштаб
+        private const float ZoomIncrement = 0.1f; // Збільшення масштабу при кожній прокрутці
+
         public Image4lass()
         {
             InitializeComponent();
@@ -37,6 +40,7 @@ namespace Image4glass
             this.historyFolderList = new ArrayList();
 
             this.filePathBuilder = new FilePathBuilder();
+
             this.toolStripStatusLabel.Text = filePathBuilder.Part1;
 
             this.defaultImageViewer = new DefaultImageViewer();
@@ -199,36 +203,16 @@ namespace Image4glass
                 this.labelRearImageIndex.Text = ImageLabelText.Rear;
                 this.labelLeftImageIndex.Text = ImageLabelText.Left;
                 this.labelRightImageIndex.Text = ImageLabelText.Right;
-            }
-        }
 
-        private void pictureBox_DoubleClick(object sender, EventArgs e)
-        {
-            /*
-            try
-            {
-
-                string programPath = @"c:\PortableProgFiles\FSViewer77\FSViewer.exe";
-                string parameters = "\"" + ((PictureBox)sender).ImageLocation + "\"";
-
-                ProcessStartInfo startInfo = new ProcessStartInfo
+                if (!this.checkBoxFixZoom.Checked)
                 {
-                    FileName = programPath,
-                    Arguments = parameters,
-                    UseShellExecute = true,
-                    CreateNoWindow = true
-                };
-                Process.Start(startInfo);
+                    pictureBoxForward.Width = this.tabPageForward.Height - 6;
+                    pictureBoxForward.Height = pictureBoxForward.Width;
+                    CenterPictureBox();
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error starting the program: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            */
-            string imagePath = ((PictureBox)sender).ImageLocation;
-
-            defaultImageViewer.OpenImage(imagePath);
         }
+
         private void buttonPast_Click(object sender, EventArgs e)
         {
             if (Clipboard.ContainsText())
@@ -239,15 +223,15 @@ namespace Image4glass
                     try
                     {
                         part2 = Regex.Replace(part2, @"\p{C}+", ""); // for desktop version 
-                        if (part2.Contains("-") && part2.Contains("Run "))
+                        if (part2.Contains("-") && part2.Contains("Run"))
                         {
-                            filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("-")).Replace("Run ", "Photos\\Run ");
+                            filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("-")).Replace("Run", "Photos\\Run");
                         }
                         else
                         {
-                            if (part2.Contains("_") && part2.Contains("Run "))
+                            if (part2.Contains("_") && part2.Contains("Run"))
                             {
-                                filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run ", "Photos\\Run ");
+                                filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run", "Photos\\Run");
                             }
                         }
                     }
@@ -446,16 +430,91 @@ namespace Image4glass
             filePathBuilder.Reset();
         }
 
-        private void pictureBoxForward_Click(object sender, EventArgs e)
+        private void buttonForwardStartViewer_Click(object sender, EventArgs e)
         {
-
+            switch (this.tabControl.SelectedIndex)
+            {
+                case 0:
+                    defaultImageViewer.OpenImage(pictureBoxForward.ImageLocation);
+                    break;
+                case 1:
+                    defaultImageViewer.OpenImage(pictureBoxRear.ImageLocation);
+                    break;
+                case 2:
+                    defaultImageViewer.OpenImage(pictureBoxLeft.ImageLocation);
+                    break;
+                case 3:
+                    defaultImageViewer.OpenImage(pictureBoxRight.ImageLocation);
+                    break;
+            }
         }
 
-        private void buttonForwardStartZoomImageForm_Click(object sender, EventArgs e)
+        private void pictureBoxCentredImage_MouseClick(object sender, MouseEventArgs e)
         {
-            ZoomImageForm zoomImage = new ZoomImageForm(pictureBoxForward.Image);
-            zoomImage.Text = labelForwardImageIndex.Text;
-            zoomImage.Show();
+            PictureBox senderPictureBox = (PictureBox)sender;
+            if (e.Button == MouseButtons.Left)
+            {
+                senderPictureBox.Left = (int)(this.tabPageForward.Width / 2 - e.Location.X);
+                senderPictureBox.Top = (int)(this.tabPageForward.Height / 2 - e.Location.Y);
+            }
+            else
+            {
+                if (senderPictureBox.Image != null)
+                {
+                    ZoomImageForm zoomImage = new ZoomImageForm(senderPictureBox.Image);
+                    zoomImage.Text = senderPictureBox.ImageLocation;
+                    zoomImage.Show();
+                }
+            }
+        }
+
+        private void pictureBoxZoomImage_MouseWheel(object sender, MouseEventArgs e)
+        {
+            PictureBox senderPictureBox = (PictureBox)sender;
+            // Змінюємо масштаб відповідно до кількості клацань колеса мишки
+            if (e.Delta > 0)
+            {
+                zoomFactor += (zoomFactor < 1.6f) ? ZoomIncrement : 0;
+            }
+            else
+            {
+                zoomFactor -= (zoomFactor > 0.2f) ? ZoomIncrement : 0;
+            }
+
+            // Зберігаємо старі розміри PictureBox
+            int previousWidth = pictureBoxForward.Width;
+            int previousHeight = pictureBoxForward.Height;
+
+            // Змінюємо розмір зображення
+            pictureBoxForward.Width = (int)(pictureBoxForward.Image.Width * zoomFactor);
+            pictureBoxForward.Height = (int)(pictureBoxForward.Image.Height * zoomFactor);
+
+            // При зміні масштабу, центруємо PictureBox по курсору
+            pictureBoxForward.Left -= (int)((pictureBoxForward.Width - previousWidth) / 2);
+            pictureBoxForward.Top -= (int)((pictureBoxForward.Height - previousHeight) / 2);
+
+            if (pictureBoxForward.Size.Height < this.Height)
+            {
+                CenterPictureBox();
+            }
+        }
+        private void CenterPictureBox()
+        {
+            int x = (int)((tabPageForward.Width - pictureBoxForward.Width) / 2);
+            int y = (int)((tabPageForward.Height - pictureBoxForward.Height) / 2);
+
+            if (x < 0)
+            {
+                x = 0;
+                tabPageForward.HorizontalScroll.Value = 0;
+            }
+            if (y < 0)
+            {
+                y = 0;
+                tabPageForward.VerticalScroll.Value = 0;
+            }
+
+            pictureBoxForward.Location = new Point(x, y);
         }
     }
 }

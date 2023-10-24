@@ -38,7 +38,11 @@ public class DefaultImageViewer
         {
 
             //string programPath = @"c:\PortableProgFiles\FSViewer77\FSViewer.exe";
-            string parameters = "\"" + imagePath + "\"";
+            string parameters;
+            
+            if(imagePath != null)
+                parameters = "\"" + imagePath + "\"";
+            else parameters= String.Empty;
 
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
