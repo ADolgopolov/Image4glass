@@ -49,13 +49,15 @@
             // 
             // pictureBox
             // 
-            pictureBox.Location = new Point(91, 81);
+            pictureBox.Location = new Point(230, 278);
             pictureBox.Name = "pictureBox";
             pictureBox.Size = new Size(512, 512);
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.TabIndex = 0;
             pictureBox.TabStop = false;
-            pictureBox.MouseClick += pictureBox_MouseClick;
+            pictureBox.MouseDown += pictureBox_MouseDown;
+            pictureBox.MouseMove += pictureBox_MouseMove;
+            pictureBox.MouseUp += pictureBox_MouseUp;
             pictureBox.MouseWheel += PictureBox_MouseWheel;
             // 
             // ZoomImageForm

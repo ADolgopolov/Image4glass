@@ -146,13 +146,15 @@ namespace Image4glass
             // pictureBoxForward
             // 
             pictureBoxForward.Cursor = Cursors.Cross;
-            pictureBoxForward.Location = new Point(278, 6);
+            pictureBoxForward.Location = new Point(388, 8);
             pictureBoxForward.Name = "pictureBoxForward";
             pictureBoxForward.Size = new Size(512, 512);
             pictureBoxForward.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxForward.TabIndex = 0;
             pictureBoxForward.TabStop = false;
-            pictureBoxForward.MouseClick += pictureBoxCentredImage_MouseClick;
+            pictureBoxForward.MouseDown += pictureBox_MouseDown;
+            pictureBoxForward.MouseMove += pictureBox_MouseMove;
+            pictureBoxForward.MouseUp += pictureBox_MouseUp;
             pictureBoxForward.MouseWheel += pictureBoxZoomImage_MouseWheel;
             // 
             // tabPageRear
@@ -185,7 +187,9 @@ namespace Image4glass
             pictureBoxRear.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxRear.TabIndex = 0;
             pictureBoxRear.TabStop = false;
-            pictureBoxRear.MouseClick += pictureBoxCentredImage_MouseClick;
+            pictureBoxRear.MouseDown += pictureBox_MouseDown;
+            pictureBoxRear.MouseMove += pictureBox_MouseMove;
+            pictureBoxRear.MouseUp += pictureBox_MouseUp;
             pictureBoxRear.MouseWheel += pictureBoxZoomImage_MouseWheel;
             // 
             // tabPageLeft
@@ -218,7 +222,9 @@ namespace Image4glass
             pictureBoxLeft.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLeft.TabIndex = 0;
             pictureBoxLeft.TabStop = false;
-            pictureBoxLeft.MouseClick += pictureBoxCentredImage_MouseClick;
+            pictureBoxLeft.MouseDown += pictureBox_MouseDown;
+            pictureBoxLeft.MouseMove += pictureBox_MouseMove;
+            pictureBoxLeft.MouseUp += pictureBox_MouseUp;
             pictureBoxLeft.MouseWheel += pictureBoxZoomImage_MouseWheel;
             // 
             // tabPageRight
@@ -251,7 +257,9 @@ namespace Image4glass
             pictureBoxRight.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxRight.TabIndex = 0;
             pictureBoxRight.TabStop = false;
-            pictureBoxRight.MouseClick += pictureBoxCentredImage_MouseClick;
+            pictureBoxRight.MouseDown += pictureBox_MouseDown;
+            pictureBoxRight.MouseMove += pictureBox_MouseMove;
+            pictureBoxRight.MouseUp += pictureBox_MouseUp;
             pictureBoxRight.MouseWheel += pictureBoxZoomImage_MouseWheel;
             // 
             // buttonForwardStartViewer
@@ -397,7 +405,7 @@ namespace Image4glass
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(960, 480);
             Name = "Image4lass";
-            Text = "Image4lass 24-10-2023";
+            Text = "Image4lass 25-10-2023";
             FormClosing += Image4lass_FormClosing;
             Load += Image4lass_Load;
             ((System.ComponentModel.ISupportInitialize)numericUpDownFotoNumber).EndInit();

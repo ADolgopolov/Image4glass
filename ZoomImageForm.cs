@@ -76,12 +76,6 @@ namespace Image4glass
             pictureBox.Location = new Point(x, y);
         }
 
-        private void pictureBox_MouseClick(object sender, MouseEventArgs e)
-        {
-            pictureBox.Left = (int)(this.Width / 2 - e.Location.X);
-            pictureBox.Top = (int)(this.Height / 2 - e.Location.Y);
-        }
-
         private async void ZoomImageForm_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Right || e.KeyCode == Keys.Up)
@@ -129,6 +123,49 @@ namespace Image4glass
             }
             newFullPath = "File request out of name range. Close this window.";
             return new Bitmap(512, 512);
+        }
+
+        private Point startPoint;
+
+        private void pictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                startPoint = e.Location;
+                Cursor = Cursors.Hand;
+            }
+            else
+            {
+                pictureBox.Left = (int)(this.Width / 2 - e.Location.X);
+                pictureBox.Top = (int)(this.Height / 2 - e.Location.Y);
+            }
+
+        }
+
+        private async void pictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Point newLocation = pictureBox.Location;
+                newLocation.X += e.X - startPoint.X;
+                newLocation.Y += e.Y - startPoint.Y;
+
+                await Task.Run(() =>
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        pictureBox.Location = newLocation;
+                    }));
+                });
+            }
+        }
+
+        private void pictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Cursor = Cursors.Cross;
+            }
         }
     }
 }

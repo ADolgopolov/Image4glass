@@ -424,10 +424,7 @@ namespace Image4glass
 
         private string TakeFirstElementOfArray()
         {
-            string? str = (string?)this.historyFolderList[0];
-            if (str is not null)
-                return str.ToString();
-            else return "";
+            return this.historyFolderList[0] as string ?? string.Empty;
         }
 
         private void openBasicFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -462,25 +459,6 @@ namespace Image4glass
                 case 3:
                     defaultImageViewer.OpenImage(pictureBoxRight.ImageLocation);
                     break;
-            }
-        }
-
-        private void pictureBoxCentredImage_MouseClick(object sender, MouseEventArgs e)
-        {
-            PictureBox senderPictureBox = (PictureBox)sender;
-            if (e.Button == MouseButtons.Left)
-            {
-                senderPictureBox.Left = (int)(this.tabPageForward.Width / 2 - e.Location.X);
-                senderPictureBox.Top = (int)(this.tabPageForward.Height / 2 - e.Location.Y);
-            }
-            else
-            {
-                if (senderPictureBox.Image != null)
-                {
-                    ZoomImageForm zoomImage = new ZoomImageForm(senderPictureBox.Image);
-                    zoomImage.Text = senderPictureBox.ImageLocation;
-                    zoomImage.Show();
-                }
             }
         }
 
@@ -520,6 +498,64 @@ namespace Image4glass
             int x = (int)((tabPageForward.Width - senderPictureBox.Width) / 2);
             int y = (int)((tabPageForward.Height - senderPictureBox.Height) / 2);
             senderPictureBox.Location = new Point(x, y);
+        }
+
+
+        private Point startPoint;
+
+        private void pictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            PictureBox pictureBox = (PictureBox)sender;
+            if (e.Button == MouseButtons.Left)
+            {
+                startPoint = e.Location;
+                Cursor = Cursors.Hand;
+            }
+            else
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    if (pictureBox.Image != null)
+                    {
+                        ZoomImageForm zoomImage = new ZoomImageForm(pictureBox.Image);
+                        zoomImage.Text = pictureBox.ImageLocation;
+                        zoomImage.Show();
+                    }
+                }
+                else
+                {
+                    pictureBox.Left = (int)(this.Width / 2 - e.Location.X);
+                    pictureBox.Top = (int)(this.Height / 2 - e.Location.Y);
+                }
+            }
+
+        }
+
+        private async void pictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            PictureBox pictureBox = (PictureBox)sender;
+            if (e.Button == MouseButtons.Left)
+            {
+                Point newLocation = pictureBox.Location;
+                newLocation.X += e.X - startPoint.X;
+                newLocation.Y += e.Y - startPoint.Y;
+
+                await Task.Run(() =>
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        pictureBox.Location = newLocation;
+                    }));
+                });
+            }
+        }
+
+        private void pictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Cursor = Cursors.Default;
+            }
         }
     }
 }
