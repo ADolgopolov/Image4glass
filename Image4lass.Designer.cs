@@ -47,7 +47,6 @@ namespace Image4glass
             tabPageRight = new TabPage();
             labelRightImageIndex = new Label();
             pictureBoxRight = new PictureBox();
-            buttonForwardStartViewer = new Button();
             numericUpDownShiftimageIndex = new NumericUpDown();
             labelShift = new Label();
             folderBrowserDialog = new FolderBrowserDialog();
@@ -62,6 +61,7 @@ namespace Image4glass
             buttonNumberUp = new Button();
             basicFolderBrowserDialog = new FolderBrowserDialog();
             checkBoxFixZoom = new CheckBox();
+            buttonZoomFit = new Button();
             ((System.ComponentModel.ISupportInitialize)numericUpDownFotoNumber).BeginInit();
             tabControl.SuspendLayout();
             tabPageForward.SuspendLayout();
@@ -79,7 +79,7 @@ namespace Image4glass
             // numericUpDownFotoNumber
             // 
             numericUpDownFotoNumber.Location = new Point(129, 3);
-            numericUpDownFotoNumber.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+            numericUpDownFotoNumber.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
             numericUpDownFotoNumber.Name = "numericUpDownFotoNumber";
             numericUpDownFotoNumber.Size = new Size(69, 23);
             numericUpDownFotoNumber.TabIndex = 0;
@@ -103,7 +103,7 @@ namespace Image4glass
             comboBoxFoldreName.FormattingEnabled = true;
             comboBoxFoldreName.Location = new Point(398, 3);
             comboBoxFoldreName.Name = "comboBoxFoldreName";
-            comboBoxFoldreName.Size = new Size(601, 23);
+            comboBoxFoldreName.Size = new Size(655, 23);
             comboBoxFoldreName.TabIndex = 2;
             comboBoxFoldreName.SelectedIndexChanged += comboBoxFoldreName_SelectedIndexChanged;
             comboBoxFoldreName.TextChanged += comboBoxFoldreName_TextChanged;
@@ -121,6 +121,8 @@ namespace Image4glass
             tabControl.SelectedIndex = 0;
             tabControl.Size = new Size(1252, 554);
             tabControl.TabIndex = 3;
+            tabControl.DoubleClick += pictureBoxForAll_DoubleClick;
+            tabControl.Resize += tabControl_Resize;
             // 
             // tabPageForward
             // 
@@ -142,16 +144,18 @@ namespace Image4glass
             labelForwardImageIndex.Size = new Size(10, 15);
             labelForwardImageIndex.TabIndex = 7;
             labelForwardImageIndex.Text = " ";
+            labelForwardImageIndex.Click += forAll_labels_ImageIndex_Click;
             // 
             // pictureBoxForward
             // 
             pictureBoxForward.Cursor = Cursors.Cross;
-            pictureBoxForward.Location = new Point(388, 8);
+            pictureBoxForward.Location = new Point(366, 6);
             pictureBoxForward.Name = "pictureBoxForward";
             pictureBoxForward.Size = new Size(512, 512);
             pictureBoxForward.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxForward.TabIndex = 0;
             pictureBoxForward.TabStop = false;
+            pictureBoxForward.DoubleClick += pictureBoxForAll_DoubleClick;
             pictureBoxForward.MouseDown += pictureBox_MouseDown;
             pictureBoxForward.MouseMove += pictureBox_MouseMove;
             pictureBoxForward.MouseUp += pictureBox_MouseUp;
@@ -177,16 +181,18 @@ namespace Image4glass
             labelRearImageIndex.Size = new Size(10, 15);
             labelRearImageIndex.TabIndex = 7;
             labelRearImageIndex.Text = " ";
+            labelRearImageIndex.Click += forAll_labels_ImageIndex_Click;
             // 
             // pictureBoxRear
             // 
             pictureBoxRear.Cursor = Cursors.Cross;
-            pictureBoxRear.Location = new Point(278, 6);
+            pictureBoxRear.Location = new Point(366, 6);
             pictureBoxRear.Name = "pictureBoxRear";
             pictureBoxRear.Size = new Size(512, 512);
             pictureBoxRear.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxRear.TabIndex = 0;
             pictureBoxRear.TabStop = false;
+            pictureBoxRear.DoubleClick += pictureBoxForAll_DoubleClick;
             pictureBoxRear.MouseDown += pictureBox_MouseDown;
             pictureBoxRear.MouseMove += pictureBox_MouseMove;
             pictureBoxRear.MouseUp += pictureBox_MouseUp;
@@ -212,16 +218,18 @@ namespace Image4glass
             labelLeftImageIndex.Size = new Size(10, 15);
             labelLeftImageIndex.TabIndex = 1;
             labelLeftImageIndex.Text = " ";
+            labelLeftImageIndex.Click += forAll_labels_ImageIndex_Click;
             // 
             // pictureBoxLeft
             // 
             pictureBoxLeft.Cursor = Cursors.Cross;
-            pictureBoxLeft.Location = new Point(278, 6);
+            pictureBoxLeft.Location = new Point(366, 6);
             pictureBoxLeft.Name = "pictureBoxLeft";
             pictureBoxLeft.Size = new Size(512, 512);
             pictureBoxLeft.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxLeft.TabIndex = 0;
             pictureBoxLeft.TabStop = false;
+            pictureBoxLeft.DoubleClick += pictureBoxForAll_DoubleClick;
             pictureBoxLeft.MouseDown += pictureBox_MouseDown;
             pictureBoxLeft.MouseMove += pictureBox_MouseMove;
             pictureBoxLeft.MouseUp += pictureBox_MouseUp;
@@ -247,31 +255,22 @@ namespace Image4glass
             labelRightImageIndex.Size = new Size(10, 15);
             labelRightImageIndex.TabIndex = 1;
             labelRightImageIndex.Text = " ";
+            labelRightImageIndex.Click += forAll_labels_ImageIndex_Click;
             // 
             // pictureBoxRight
             // 
             pictureBoxRight.Cursor = Cursors.Cross;
-            pictureBoxRight.Location = new Point(278, 6);
+            pictureBoxRight.Location = new Point(366, 6);
             pictureBoxRight.Name = "pictureBoxRight";
             pictureBoxRight.Size = new Size(512, 512);
             pictureBoxRight.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxRight.TabIndex = 0;
             pictureBoxRight.TabStop = false;
+            pictureBoxRight.DoubleClick += pictureBoxForAll_DoubleClick;
             pictureBoxRight.MouseDown += pictureBox_MouseDown;
             pictureBoxRight.MouseMove += pictureBox_MouseMove;
             pictureBoxRight.MouseUp += pictureBox_MouseUp;
             pictureBoxRight.MouseWheel += pictureBoxZoomImage_MouseWheel;
-            // 
-            // buttonForwardStartViewer
-            // 
-            buttonForwardStartViewer.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buttonForwardStartViewer.Location = new Point(1005, 3);
-            buttonForwardStartViewer.Name = "buttonForwardStartViewer";
-            buttonForwardStartViewer.Size = new Size(90, 23);
-            buttonForwardStartViewer.TabIndex = 13;
-            buttonForwardStartViewer.Text = "Open Viewer";
-            buttonForwardStartViewer.UseVisualStyleBackColor = true;
-            buttonForwardStartViewer.Click += buttonForwardStartViewer_Click;
             // 
             // numericUpDownShiftimageIndex
             // 
@@ -384,13 +383,25 @@ namespace Image4glass
             checkBoxFixZoom.Text = "Fix Zoom";
             checkBoxFixZoom.UseVisualStyleBackColor = true;
             // 
+            // buttonZoomFit
+            // 
+            buttonZoomFit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonZoomFit.Location = new Point(1059, 3);
+            buttonZoomFit.Name = "buttonZoomFit";
+            buttonZoomFit.Size = new Size(36, 23);
+            buttonZoomFit.TabIndex = 15;
+            buttonZoomFit.Text = "><";
+            buttonZoomFit.UseVisualStyleBackColor = true;
+            buttonZoomFit.Click += buttonZoomFit_Click;
+            // 
             // Image4lass
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = buttonZoomFit;
             ClientSize = new Size(1264, 611);
+            Controls.Add(buttonZoomFit);
             Controls.Add(checkBoxFixZoom);
-            Controls.Add(buttonForwardStartViewer);
             Controls.Add(buttonNumberUp);
             Controls.Add(buttonNumberDown);
             Controls.Add(labelLoading);
@@ -405,7 +416,7 @@ namespace Image4glass
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(960, 480);
             Name = "Image4lass";
-            Text = "Image4lass 25-10-2023";
+            Text = "Image4lass 31-10-2023";
             FormClosing += Image4lass_FormClosing;
             Load += Image4lass_Load;
             ((System.ComponentModel.ISupportInitialize)numericUpDownFotoNumber).EndInit();
@@ -460,7 +471,7 @@ namespace Image4glass
         private ToolStripMenuItem openBasicFolderToolStripMenuItem;
         private FolderBrowserDialog basicFolderBrowserDialog;
         private ToolStripMenuItem resetBasicFolderToolStripMenuItem;
-        private Button buttonForwardStartViewer;
         private CheckBox checkBoxFixZoom;
+        private Button buttonZoomFit;
     }
 }

@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZoomImageForm));
             panel = new Panel();
             pictureBox = new PictureBox();
+            buttonFitImage = new Button();
             panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             SuspendLayout();
@@ -45,6 +46,7 @@
             panel.Name = "panel";
             panel.Size = new Size(1008, 985);
             panel.TabIndex = 1;
+            panel.MouseDown += panel_MouseDown;
             panel.Resize += panel_Resize;
             // 
             // pictureBox
@@ -60,11 +62,22 @@
             pictureBox.MouseUp += pictureBox_MouseUp;
             pictureBox.MouseWheel += PictureBox_MouseWheel;
             // 
+            // buttonFitImage
+            // 
+            buttonFitImage.Location = new Point(1, 1);
+            buttonFitImage.Name = "buttonFitImage";
+            buttonFitImage.Size = new Size(1, 1);
+            buttonFitImage.TabIndex = 2;
+            buttonFitImage.UseVisualStyleBackColor = true;
+            buttonFitImage.Click += buttonFitImage_Click;
+            // 
             // ZoomImageForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             AutoScroll = true;
+            CancelButton = buttonFitImage;
             ClientSize = new Size(1008, 985);
+            Controls.Add(buttonFitImage);
             Controls.Add(panel);
             Cursor = Cursors.Cross;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -81,5 +94,6 @@
         #endregion
         private Panel panel;
         private PictureBox pictureBox;
+        private Button buttonFitImage;
     }
 }

@@ -28,9 +28,6 @@ namespace Image4glass
             public static string Loading = "Loading...";
         }
 
-        private float zoomFactor = 0.2f; // Початковий масштаб
-        private const float ZoomIncrement = 0.1f; // Збільшення масштабу при кожній прокрутці
-
         public Image4lass()
         {
             InitializeComponent();
@@ -443,24 +440,8 @@ namespace Image4glass
             filePathBuilder.Reset();
         }
 
-        private void buttonForwardStartViewer_Click(object sender, EventArgs e)
-        {
-            switch (this.tabControl.SelectedIndex)
-            {
-                case 0:
-                    defaultImageViewer.OpenImage(pictureBoxForward.ImageLocation);
-                    break;
-                case 1:
-                    defaultImageViewer.OpenImage(pictureBoxRear.ImageLocation);
-                    break;
-                case 2:
-                    defaultImageViewer.OpenImage(pictureBoxLeft.ImageLocation);
-                    break;
-                case 3:
-                    defaultImageViewer.OpenImage(pictureBoxRight.ImageLocation);
-                    break;
-            }
-        }
+        private float zoomFactor = 0.2f; // Початковий масштаб
+        private const float ZoomIncrement = 0.2f; // Збільшення масштабу при кожній прокрутці
 
         private void pictureBoxZoomImage_MouseWheel(object sender, MouseEventArgs e)
         {
@@ -468,11 +449,11 @@ namespace Image4glass
             // Змінюємо масштаб відповідно до кількості клацань колеса мишки
             if (e.Delta > 0)
             {
-                zoomFactor += (zoomFactor < 1.6f) ? ZoomIncrement : 0;
+                zoomFactor += (zoomFactor < 3.0f) ? ZoomIncrement : 0;
             }
             else
             {
-                zoomFactor -= (zoomFactor > 0.2f) ? ZoomIncrement : 0;
+                zoomFactor -= (zoomFactor > 0.25f) ? ZoomIncrement : 0;
             }
 
             // Зберігаємо старі розміри PictureBox
@@ -495,8 +476,8 @@ namespace Image4glass
 
         private void CenterPictureBox(PictureBox senderPictureBox)
         {
-            int x = (int)((tabPageForward.Width - senderPictureBox.Width) / 2);
-            int y = (int)((tabPageForward.Height - senderPictureBox.Height) / 2);
+            int x = (int)((tabControl.Width - 24 - senderPictureBox.Width) / 2);
+            int y = (int)((tabControl.Height - 24 - senderPictureBox.Height) / 2);
             senderPictureBox.Location = new Point(x, y);
         }
 
@@ -556,6 +537,37 @@ namespace Image4glass
             {
                 Cursor = Cursors.Default;
             }
+        }
+
+        private void pictureBoxForAll_DoubleClick(object sender, EventArgs e)
+        {
+            defaultImageViewer.OpenImage(((PictureBox)sender).ImageLocation);
+        }
+
+        private void tabControl_Resize(object sender, EventArgs e)
+        {
+            PictureBox[] pictureBoxes = { pictureBoxForward, pictureBoxRear, pictureBoxLeft, pictureBoxRight };
+
+            int desiredSize = tabControl.Height - 42;
+
+            foreach (PictureBox pictureBox in pictureBoxes)
+            {
+                pictureBox.Width = desiredSize;
+                pictureBox.Height = desiredSize;
+                CenterPictureBox(pictureBox);
+            }
+        }
+
+        private void forAll_labels_ImageIndex_Click(object sender, EventArgs e)
+        {
+            string textOnLabel = ((Label)sender).Text;
+            Clipboard.SetText(textOnLabel);
+            MessageBox.Show(textOnLabel, "Напис в буфері клавіатури", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void buttonZoomFit_Click(object sender, EventArgs e)
+        {
+            tabControl_Resize(sender, e);
         }
     }
 }

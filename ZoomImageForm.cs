@@ -14,7 +14,7 @@ namespace Image4glass
     public partial class ZoomImageForm : Form
     {
         private float zoomFactor = 0.2f; // Початковий масштаб
-        private const float ZoomIncrement = 0.1f; // Збільшення масштабу при кожній прокрутці
+        private const float ZoomIncrement = 0.2f; // Збільшення масштабу при кожній прокрутці
         public ZoomImageForm(Image img)
         {
             InitializeComponent();
@@ -26,11 +26,11 @@ namespace Image4glass
             // Змінюємо масштаб відповідно до кількості клацань колеса мишки
             if (e.Delta > 0)
             {
-                zoomFactor += (zoomFactor < 1.6f) ? ZoomIncrement : 0;
+                zoomFactor += (zoomFactor < 3.0f) ? ZoomIncrement : 0;
             }
             else
             {
-                zoomFactor -= (zoomFactor > 0.2f) ? ZoomIncrement : 0;
+                zoomFactor -= (zoomFactor > 0.25f) ? ZoomIncrement : 0;
             }
 
             // Зберігаємо старі розміри PictureBox
@@ -134,10 +134,14 @@ namespace Image4glass
                 startPoint = e.Location;
                 Cursor = Cursors.Hand;
             }
-            else
+            if (e.Button == MouseButtons.Middle)
             {
                 pictureBox.Left = (int)(this.Width / 2 - e.Location.X);
                 pictureBox.Top = (int)(this.Height / 2 - e.Location.Y);
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                zoomToFit();
             }
 
         }
@@ -166,6 +170,24 @@ namespace Image4glass
             {
                 Cursor = Cursors.Cross;
             }
+        }
+
+        private void zoomToFit()
+        {
+            int desiredSize = this.Height - 42;
+            pictureBox.Width = desiredSize;
+            pictureBox.Height = desiredSize;
+            CenterPictureBox();
+        }
+
+        private void panel_MouseDown(object sender, MouseEventArgs e)
+        {
+            zoomToFit();
+        }
+
+        private void buttonFitImage_Click(object sender, EventArgs e)
+        {
+            zoomToFit();
         }
     }
 }
