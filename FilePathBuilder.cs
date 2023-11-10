@@ -31,14 +31,21 @@ namespace Image4glass
             get { return part2; }
             set 
             {
+                if (value.Contains("|")) 
+                {
+                    part2 = value.Replace("|", "\\");
+                } 
+                else
+                {
                     if (value.Contains("-"))
-                    { 
-                        part2 = value.Replace("-", "\\"); 
+                    {
+                        part2 = value.Replace("-", "\\");
                     }
                     else
                     {
                         part2 = value.Replace("_", "\\");
                     }
+                }
             }
         }
 

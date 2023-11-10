@@ -81,9 +81,12 @@
             Controls.Add(panel);
             Cursor = Cursors.Cross;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
+            Location = new Point(1, 1);
             Name = "ZoomImageForm";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.Manual;
             Text = "ZoomImageForm";
+            WindowState = FormWindowState.Maximized;
             KeyUp += ZoomImageForm_KeyUp;
             panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();

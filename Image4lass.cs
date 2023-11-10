@@ -91,49 +91,71 @@ namespace Image4glass
             }
         }
 
+        private async void AskFileImageForNearTab(string tabFolderName, decimal FileNameIndex)
+        {
+            string path = folderName + tabFolderName;
+
+            path += @"\" + FileNameIndex + ".jpg";
+
+            await Task.Run(() => File.Exists(path));
+        }
+
         private async Task LoadImages(int tabControlSelectedIndex)
         {
-            var image = await Task.Run(() =>
+            await Task.Run(() =>
             {
                 switch (tabControlSelectedIndex)
                 {
                     case 0:
                         ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
-                        ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
-                        ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
-                        ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
+                        if (checkBox4load.Checked)
+                        {
+                            ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
+                            ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
+                            ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
+                        }
                         break;
                     case 1:
                         ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
-                        ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
-                        ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
-                        ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
+                        if (checkBox4load.Checked)
+                        {
+                            ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                            ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
+                            ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
+                        }
                         break;
                     case 2:
                         ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
-                        ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
-                        ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
-                        ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        if (checkBox4load.Checked)
+                        {
+                            ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
+                            ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
+                            ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        }
                         break;
                     case 3:
                         ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
-                        ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
-                        ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
-                        ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        if (checkBox4load.Checked)
+                        {
+                            ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
+                            ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
+                            ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
+                        }
                         break;
                 }
-                return true;
             });
         }
 
-        private async void buttonOpenFolder_Click(object sender, EventArgs e)
+        private void buttonOpenFolder_Click(object sender, EventArgs e)
         {
             if (this.folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
                 folderNameChange(this.folderBrowserDialog.SelectedPath);
                 addNewFolderToList(this.folderBrowserDialog.SelectedPath);
-                this.numericUpDownFotoNumber.Value = this.numericUpDownShiftimageIndex.Value + 1;
-                await this.LoadImages(this.tabControl.SelectedIndex);
+
+                if (this.numericUpDownFotoNumber.Value == this.numericUpDownShiftimageIndex.Value + 1)
+                    this.numericUpDownFotoNumber.Value = this.numericUpDownShiftimageIndex.Value + 2;
+                else this.numericUpDownFotoNumber.Value = this.numericUpDownShiftimageIndex.Value + 1;
             }
         }
 
@@ -173,7 +195,11 @@ namespace Image4glass
             buttonNumberDown.Visible = isEnable;
             buttonNumberUp.Visible = isEnable;
             buttonOpenFolder.Enabled = isEnable;
+            comboBoxFoldreName.Enabled = isEnable;
+            buttonZoomFit.Enabled = isEnable;
+            checkBoxFixZoom.Enabled = isEnable;
             numericUpDownShiftimageIndex.Enabled = isEnable;
+            tabControl.Enabled = isEnable;
         }
         /// <summary>
         /// Тут відбувається вся магія. Міняється номер, запускається загрузка зображень.
@@ -236,15 +262,22 @@ namespace Image4glass
                     try
                     {
                         part2 = Regex.Replace(part2, @"\p{C}+", ""); // for desktop version 
-                        if (part2.Contains("-") && part2.Contains("Run"))
+                        if (part2.Contains("|") && part2.Contains("Run"))
                         {
-                            filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("-")).Replace("Run", "Photos\\Run");
+                            filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("|")).Replace("Run", "Photos\\Run");
                         }
                         else
                         {
-                            if (part2.Contains("_") && part2.Contains("Run"))
+                            if (part2.Contains("-") && part2.Contains("Run"))
                             {
-                                filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run", "Photos\\Run");
+                                filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("-")).Replace("Run", "Photos\\Run");
+                            }
+                            else
+                            {
+                                if (part2.Contains("_") && part2.Contains("Run"))
+                                {
+                                    filePathBuilder.Part2 = part2.Substring(0, part2.LastIndexOf("_")).Replace("Run", "Photos\\Run");
+                                }
                             }
                         }
                     }
@@ -253,15 +286,22 @@ namespace Image4glass
                         MessageBox.Show($"Помилка парсування шляху: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     int lastSeparatorIndex = 0;
-                    if (part2.Contains("-"))
+                    if (part2.Contains("|"))
                     {
-                        lastSeparatorIndex = part2.LastIndexOf("-") + 1;
+                        lastSeparatorIndex = part2.LastIndexOf("|") + 1;
                     }
                     else
                     {
-                        if (part2.Contains("_"))
+                        if (part2.Contains("-"))
                         {
-                            lastSeparatorIndex = part2.LastIndexOf("_") + 1;
+                            lastSeparatorIndex = part2.LastIndexOf("-") + 1;
+                        }
+                        else
+                        {
+                            if (part2.Contains("_"))
+                            {
+                                lastSeparatorIndex = part2.LastIndexOf("_") + 1;
+                            }
                         }
                     }
                     filePathBuilder.Part3 = part2.Substring(lastSeparatorIndex, part2.Length - lastSeparatorIndex);
@@ -271,7 +311,7 @@ namespace Image4glass
 
                         folderNameChange(filePathBuilder.RunFolderFullPath);
                         addNewFolderToList(filePathBuilder.RunFolderFullPath);
-                        this.numericUpDownFotoNumber.Value = fileNumber;
+                        this.numericUpDownFotoNumber.Value = (this.numericUpDownFotoNumber.Value != fileNumber) ? fileNumber : ++fileNumber;
                     }
                     else
                     {
@@ -306,7 +346,7 @@ namespace Image4glass
 
                         if (int.TryParse(subStr, out int fileNumber))
                         {
-                            this.numericUpDownFotoNumber.Value = fileNumber;
+                            this.numericUpDownFotoNumber.Value = (this.numericUpDownFotoNumber.Value != fileNumber) ? fileNumber : ++fileNumber;
                         }
                         else
                         {
@@ -388,6 +428,11 @@ namespace Image4glass
         {
             this.SaveFolderListToFile();
             this.filePathBuilder.SaveData();
+
+            // Збереження розміру та розташування вікна
+            Properties.Settings.Default.WindowSize = this.Size;
+            Properties.Settings.Default.WindowLocation = this.Location;
+            Properties.Settings.Default.Save();
         }
 
         /// <summary>
@@ -417,6 +462,10 @@ namespace Image4glass
                 folderName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 this.folderBrowserDialog.SelectedPath = folderName;
             }
+
+            // Відновлення розміру та розташування вікна
+            this.Size = Properties.Settings.Default.WindowSize;
+            this.Location = Properties.Settings.Default.WindowLocation;
         }
 
         private string TakeFirstElementOfArray()
@@ -440,16 +489,15 @@ namespace Image4glass
             filePathBuilder.Reset();
         }
 
-        private float zoomFactor = 0.2f; // Початковий масштаб
-        private const float ZoomIncrement = 0.2f; // Збільшення масштабу при кожній прокрутці
-
         private void pictureBoxZoomImage_MouseWheel(object sender, MouseEventArgs e)
         {
             PictureBox senderPictureBox = (PictureBox)sender;
+            float zoomFactor = ((float)senderPictureBox.Width) / 2048.0f;
+            const float ZoomIncrement = 0.2f;
             // Змінюємо масштаб відповідно до кількості клацань колеса мишки
             if (e.Delta > 0)
             {
-                zoomFactor += (zoomFactor < 3.0f) ? ZoomIncrement : 0;
+                zoomFactor += (zoomFactor < 4.0f) ? ZoomIncrement : 0;
             }
             else
             {
@@ -568,6 +616,42 @@ namespace Image4glass
         private void buttonZoomFit_Click(object sender, EventArgs e)
         {
             tabControl_Resize(sender, e);
+        }
+
+        private void Image4lass_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Right)
+            {
+                if (buttonNumberUp.Visible)
+                    buttonNumberUp_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.Left)
+            {
+                if (buttonNumberDown.Visible)
+                    buttonNumberDown_Click(sender, e);
+            }
+            if (e.KeyCode == Keys.F1)
+            {
+                tabControl.SelectTab(0);
+            }
+            if (e.KeyCode == Keys.F2)
+            {
+                tabControl.SelectTab(1);
+            }
+            if (e.KeyCode == Keys.F3)
+            {
+                tabControl.SelectTab(2);
+            }
+            if (e.KeyCode == Keys.F4)
+            {
+                tabControl.SelectTab(3);
+            }
+        }
+
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(!checkBox4load.Checked)
+                numericUpDownNumber_ValueChanged(sender, e);
         }
     }
 }

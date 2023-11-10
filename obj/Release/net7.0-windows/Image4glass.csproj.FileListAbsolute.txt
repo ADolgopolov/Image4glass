@@ -16,3 +16,4 @@ D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.genruntimeconfig.cache
 D:\App\Image4glass\obj\Release\net7.0-windows\ref\Image4glass.dll
 D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.Properties.Resources.resources
 D:\App\Image4glass\obj\Release\net7.0-windows\Image4glass.ZoomImageForm.resources
+D:\App\Image4glass\bin\Release\net7.0-windows\Image4glass.dll.config
