@@ -46,5 +46,17 @@ namespace Image4glass.Properties {
                 this["WindowLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool LoadImgesMode {
+            get {
+                return ((bool)(this["LoadImgesMode"]));
+            }
+            set {
+                this["LoadImgesMode"] = value;
+            }
+        }
     }
 }

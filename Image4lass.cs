@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Image4glass.Properties;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Imaging;
@@ -435,6 +436,7 @@ namespace Image4glass
             // Збереження розміру та розташування вікна
             Properties.Settings.Default.WindowSize = this.Size;
             Properties.Settings.Default.WindowLocation = this.Location;
+            Properties.Settings.Default.LoadImgesMode = this.isLoading4Images;
             Properties.Settings.Default.Save();
         }
 
@@ -469,6 +471,8 @@ namespace Image4glass
             // Відновлення розміру та розташування вікна
             this.Size = Properties.Settings.Default.WindowSize;
             this.Location = Properties.Settings.Default.WindowLocation;
+            this.isLoading4Images = Settings.Default.LoadImgesMode;
+            if(this.isLoading4Images) { labelLoading.ForeColor = Color.ForestGreen; }
         }
 
         private string TakeFirstElementOfArray()
