@@ -19,6 +19,8 @@ namespace Image4glass
 
         FilePathBuilder filePathBuilder;
 
+        bool isLoading4Images = false;
+
         public static class ImageLabelText
         {
             public static string Forward = "Forward";
@@ -108,7 +110,7 @@ namespace Image4glass
                 {
                     case 0:
                         ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
-                        if (checkBox4load.Checked)
+                        if (isLoading4Images)
                         {
                             ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
                             ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
@@ -117,7 +119,7 @@ namespace Image4glass
                         break;
                     case 1:
                         ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
-                        if (checkBox4load.Checked)
+                        if (isLoading4Images)
                         {
                             ImageLabelText.Forward = LoadImageOnTab(@"\Forward", this.pictureBoxForward, this.numericUpDownFotoNumber.Value - this.numericUpDownShiftimageIndex.Value);
                             ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
@@ -126,7 +128,7 @@ namespace Image4glass
                         break;
                     case 2:
                         ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
-                        if (checkBox4load.Checked)
+                        if (isLoading4Images)
                         {
                             ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
                             ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
@@ -135,7 +137,7 @@ namespace Image4glass
                         break;
                     case 3:
                         ImageLabelText.Right = LoadImageOnTab(@"\Right", this.pictureBoxRight, this.numericUpDownFotoNumber.Value);
-                        if (checkBox4load.Checked)
+                        if (isLoading4Images)
                         {
                             ImageLabelText.Left = LoadImageOnTab(@"\Left", this.pictureBoxLeft, this.numericUpDownFotoNumber.Value);
                             ImageLabelText.Rear = LoadImageOnTab(@"\Rear", this.pictureBoxRear, this.numericUpDownFotoNumber.Value + this.numericUpDownShiftimageIndex.Value);
@@ -199,7 +201,8 @@ namespace Image4glass
             buttonZoomFit.Enabled = isEnable;
             checkBoxFixZoom.Enabled = isEnable;
             numericUpDownShiftimageIndex.Enabled = isEnable;
-            tabControl.Enabled = isEnable;
+            if (!isLoading4Images)
+                tabControl.Enabled = isEnable;
         }
         /// <summary>
         /// Тут відбувається вся магія. Міняється номер, запускається загрузка зображень.
@@ -646,11 +649,29 @@ namespace Image4glass
             {
                 tabControl.SelectTab(3);
             }
+            if (e.KeyCode == Keys.F8)
+            {
+                if (MessageBox.Show($"Змінити режим загрузки зображень?", "Налаштування", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (isLoading4Images)
+                    {
+                        isLoading4Images = false;
+                        MessageBox.Show($"При наступній зміні номеру. \nЗображення будуть вантажитись по ОДНОМУ.", "Налаштування", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        labelLoading.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        isLoading4Images = true;
+                        MessageBox.Show($"При наступній зміні номеру. \nЗображення будуть вантажитись по ЧОТИРИ.", "Налаштування", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        labelLoading.ForeColor = Color.ForestGreen;
+                    }
+                }
+            }
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!checkBox4load.Checked)
+            if (!isLoading4Images)
                 numericUpDownNumber_ValueChanged(sender, e);
         }
     }

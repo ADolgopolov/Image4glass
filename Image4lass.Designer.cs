@@ -62,7 +62,6 @@ namespace Image4glass
             basicFolderBrowserDialog = new FolderBrowserDialog();
             checkBoxFixZoom = new CheckBox();
             buttonZoomFit = new Button();
-            checkBox4load = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)numericUpDownFotoNumber).BeginInit();
             tabControl.SuspendLayout();
             tabPageForward.SuspendLayout();
@@ -106,7 +105,7 @@ namespace Image4glass
             comboBoxFoldreName.FormattingEnabled = true;
             comboBoxFoldreName.Location = new Point(454, 4);
             comboBoxFoldreName.Name = "comboBoxFoldreName";
-            comboBoxFoldreName.Size = new Size(508, 23);
+            comboBoxFoldreName.Size = new Size(567, 23);
             comboBoxFoldreName.TabIndex = 2;
             comboBoxFoldreName.TabStop = false;
             comboBoxFoldreName.SelectedIndexChanged += comboBoxFoldreName_SelectedIndexChanged;
@@ -410,25 +409,12 @@ namespace Image4glass
             buttonZoomFit.UseVisualStyleBackColor = true;
             buttonZoomFit.Click += buttonZoomFit_Click;
             // 
-            // checkBox4load
-            // 
-            checkBox4load.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            checkBox4load.AutoSize = true;
-            checkBox4load.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            checkBox4load.Location = new Point(968, 6);
-            checkBox4load.Name = "checkBox4load";
-            checkBox4load.Size = new Size(57, 19);
-            checkBox4load.TabIndex = 16;
-            checkBox4load.Text = "cache";
-            checkBox4load.UseVisualStyleBackColor = true;
-            // 
             // Image4lass
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = buttonZoomFit;
             ClientSize = new Size(1264, 611);
-            Controls.Add(checkBox4load);
             Controls.Add(buttonZoomFit);
             Controls.Add(checkBoxFixZoom);
             Controls.Add(buttonNumberUp);
@@ -446,7 +432,7 @@ namespace Image4glass
             KeyPreview = true;
             MinimumSize = new Size(960, 480);
             Name = "Image4lass";
-            Text = "Image4lass 10-11-2023 Test";
+            Text = "Image4lass 13-11-2023";
             FormClosing += Image4lass_FormClosing;
             Load += Image4lass_Load;
             KeyUp += Image4lass_KeyUp;
@@ -504,6 +490,5 @@ namespace Image4glass
         private ToolStripMenuItem resetBasicFolderToolStripMenuItem;
         private CheckBox checkBoxFixZoom;
         private Button buttonZoomFit;
-        private CheckBox checkBox4load;
     }
 }
